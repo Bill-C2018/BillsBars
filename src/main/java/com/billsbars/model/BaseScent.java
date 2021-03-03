@@ -1,5 +1,8 @@
 package com.billsbars.model;
 
+import lombok.Data;
+
+@Data
 public class BaseScent {
 	
 	String name;

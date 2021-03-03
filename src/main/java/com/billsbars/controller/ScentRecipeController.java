@@ -12,69 +12,69 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.billsbars.model.ColorRecipe;
 import com.billsbars.model.ResponseModel;
-
+import com.billsbars.model.Scent;
 
 @RestController
-public class ColorRecipeController {
+public class ScentRecipeController {
 	
-	Logger logger = LoggerFactory.getLogger(ColorRecipeController.class);
-
-	
-	
-	@PostMapping(value = "/colorrecipe")
-	ResponseEntity<ResponseModel> createColor(
+	Logger logger = LoggerFactory.getLogger(ScentRecipeController.class);
+			
+	@PostMapping(value ="scentrecipe")
+	ResponseEntity<ResponseModel> createScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ColorRecipe colorRecipe) {
+			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
-		
+	
 	}
 	
-	@PutMapping(value = "colorrecipe")
-	ResponseEntity<ResponseModel> editColor (
+	@PutMapping(value = "scentrecipe")
+	ResponseEntity<ResponseModel> editScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ColorRecipe colorRecipe) {
-
+			@RequestBody Scent scent) {
+		
 		ResponseModel resp = new ResponseModel();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
-
-	}
 	
-	@DeleteMapping(value = "colorrecipe")
-	ResponseEntity<ResponseModel> deleteColor (
+	}	
+
+	
+	@DeleteMapping(value = "scentrecipe/{scentId}")
+	ResponseEntity<ResponseModel> deleteScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ColorRecipe colorRecipe) {
+			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
-
-		
-	}
 	
-	@GetMapping(value ="colorrecipe")
-	ResponseEntity<ResponseModel> getAllColors (
-			@RequestHeader(value = "access-token", required = true) String r) {
-
-		ResponseModel resp = new ResponseModel();
-		
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
-	}
-
-	@GetMapping(value ="colorrecipe/{colorname}")
-	ResponseEntity<ResponseModel> getOneColor (
-			@RequestHeader(value = "access-token", required = true) String r) {
-
-		ResponseModel resp = new ResponseModel();
-		
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
-	}
-
+	}	
 	
+	@GetMapping(value = "scentrecipe/{scentId}")
+	ResponseEntity<ResponseModel> getOneScent(
+			@RequestHeader(value = "access-token", required = true) String r,
+			@RequestBody Scent scent) {
+		
+		ResponseModel resp = new ResponseModel();
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
+	
+	}	
+
+	@GetMapping(value = "scentrecipe")
+	ResponseEntity<ResponseModel> getAllScents(
+			@RequestHeader(value = "access-token", required = true) String r,
+			@RequestBody Scent scent) {
+		
+		ResponseModel resp = new ResponseModel();
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
+	
+	}	
+
 
 }
