@@ -1,8 +1,8 @@
-package com.billsbars.service;
+package com.billsbars.app.service;
 
 import java.util.List;
 
-import com.billsbars.model.BarOfSoap;
+import com.billsbars.app.model.BarOfSoap;
 
 public class BarOfSoapServiceImp implements BarOfSoapService {
 

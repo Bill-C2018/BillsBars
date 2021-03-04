@@ -1,4 +1,4 @@
-package com.billsbars.controller;
+package com.billsbars.app.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.billsbars.model.ColorRecipe;
-import com.billsbars.model.ResponseModel;
+import com.billsbars.app.model.ColorRecipe;
+import com.billsbars.app.model.ResponseModel;
 
 
 @RestController

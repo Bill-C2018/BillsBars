@@ -1,4 +1,4 @@
-package com.billsbars.model;
+package com.billsbars.app.model;
 
 import lombok.Data;
 
@@ -13,9 +13,9 @@ public class BarOfSoap {
 	private int count;
 	private boolean isOrganic = false;
 	
-	BarOfSoap() { }
+	public BarOfSoap() { }
 	
-	BarOfSoap(BarTypes type, BaseTypes baseType, ColorRecipe color,
+	public BarOfSoap(BarTypes type, BaseTypes baseType, ColorRecipe color,
 					Scent scent,boolean organic) {
 		
 		this.barType = type;
