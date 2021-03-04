@@ -1,8 +1,21 @@
 package com.billsbars.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
+import com.billsbars.model.ColorRecipe;
+
 public interface ColorRecipesService {
+	
+	boolean createColor(ColorRecipe colorRecipe);
+	
+	boolean deleteColor(ColorRecipe colorRecipe);
+	
+	ColorRecipe editColor(ColorRecipe colorRecipe);
+	
+	List<ColorRecipe> getAllColors();
+	
+	ColorRecipe getOneColor(String colorId);
+	
+	
 
 }

@@ -10,6 +10,7 @@ public class BarOfSoap {
 	private BaseTypes baseType;
 	private ColorRecipe color;
 	private Scent scent;
+	private int count;
 	private boolean isOrganic = false;
 	
 	BarOfSoap() { }
