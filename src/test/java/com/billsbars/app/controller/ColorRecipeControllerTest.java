@@ -1,5 +1,7 @@
 package com.billsbars.app.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -14,31 +16,29 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import com.billsbars.app.model.BarOfSoap;
+import com.billsbars.app.model.ColorRecipe;
 import com.billsbars.app.model.ResponseModel;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestInstance(Lifecycle.PER_CLASS)
-public class SoapBarControllerTest {
-
+public class ColorRecipeControllerTest {
+	
 	@LocalServerPort
 	private int port;
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
-
 	
 	@Test
-	void createABarOfSoap() throws Exception {
+	void createColor() throws Exception {
+
+		ColorRecipe colorRecipe = new ColorRecipe();
 		
-		BarOfSoap soap = new BarOfSoap();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
+        HttpEntity<?> entity = new HttpEntity<>(colorRecipe,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps";        
+		uri += port + "/colorrecipe";        
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
@@ -46,17 +46,18 @@ public class SoapBarControllerTest {
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
-	}
+	}	
 	
 	@Test
-	void editABarOfSoap() throws Exception {
+	void editColor() throws Exception {
+
+		ColorRecipe colorRecipe = new ColorRecipe();
 		
-		BarOfSoap soap = new BarOfSoap();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
+        HttpEntity<?> entity = new HttpEntity<>(colorRecipe,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps";        
+		uri += port + "/colorrecipe";        
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.PUT, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
@@ -64,17 +65,18 @@ public class SoapBarControllerTest {
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
-	}
-
+	}	
+	
 	@Test
-	void deleteABarOfSoap() throws Exception {
+	void deleteColor() throws Exception {
+
+		ColorRecipe colorRecipe = new ColorRecipe();
 		
-		BarOfSoap soap = new BarOfSoap();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
+        HttpEntity<?> entity = new HttpEntity<>(colorRecipe,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps";        
+		uri += port + "/colorrecipe";        
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
@@ -82,17 +84,18 @@ public class SoapBarControllerTest {
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
-	}
+	}	
 
 	@Test
-	void getOneBarOfSoap() throws Exception {
-		
+	void getAllColors() throws Exception {
+
+		ColorRecipe colorRecipe = new ColorRecipe();
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(headers);	
+        HttpEntity<?> entity = new HttpEntity<>(colorRecipe,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps/0001";        
+		uri += port + "/colorrecipe";        
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
@@ -100,17 +103,18 @@ public class SoapBarControllerTest {
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
-	}
+	}		
 	
 	@Test
-	void getAllBarsOfSoap() throws Exception {
-		
+	void getOneColor() throws Exception {
+
+		ColorRecipe colorRecipe = new ColorRecipe();
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(headers);	
+        HttpEntity<?> entity = new HttpEntity<>(colorRecipe,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps";        
+		uri += port + "/colorrecipe/00001";        
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
@@ -118,5 +122,6 @@ public class SoapBarControllerTest {
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
-	}
+	}		
+
 }

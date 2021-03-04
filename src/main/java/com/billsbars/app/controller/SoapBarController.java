@@ -27,6 +27,7 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
@@ -37,6 +38,7 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -48,6 +50,7 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -58,6 +61,7 @@ public class SoapBarController {
 			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -68,6 +72,7 @@ public class SoapBarController {
 			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	

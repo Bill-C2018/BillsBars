@@ -29,6 +29,7 @@ public class ColorRecipeController {
 			@RequestBody ColorRecipe colorRecipe) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 		
@@ -40,6 +41,7 @@ public class ColorRecipeController {
 			@RequestBody ColorRecipe colorRecipe) {
 
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 
@@ -51,6 +53,7 @@ public class ColorRecipeController {
 			@RequestBody ColorRecipe colorRecipe) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 
@@ -62,15 +65,17 @@ public class ColorRecipeController {
 			@RequestHeader(value = "access-token", required = true) String r) {
 
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
-	@GetMapping(value ="colorrecipe/{colorname}")
+	@GetMapping(value ="colorrecipe/{colorId}")
 	ResponseEntity<ResponseModel> getOneColor (
 			@RequestHeader(value = "access-token", required = true) String r) {
 
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
