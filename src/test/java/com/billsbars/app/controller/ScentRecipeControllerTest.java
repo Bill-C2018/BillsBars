@@ -1,5 +1,7 @@
 package com.billsbars.app.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -16,12 +18,11 @@ import org.springframework.http.ResponseEntity;
 
 import com.billsbars.app.model.BarOfSoap;
 import com.billsbars.app.model.ResponseModel;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import com.billsbars.app.model.Scent;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestInstance(Lifecycle.PER_CLASS)
-public class SoapBarControllerTest {
+public class ScentRecipeControllerTest {
 
 	@LocalServerPort
 	private int port;
@@ -29,16 +30,15 @@ public class SoapBarControllerTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 
-	
 	@Test
-	void createABarOfSoap() throws Exception {
+	void createScent() throws Exception {
 		
-		BarOfSoap soap = new BarOfSoap();
+		Scent scent = new Scent();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
+        HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps";        
+		uri += port + "/scentrecipe";        
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
@@ -46,17 +46,17 @@ public class SoapBarControllerTest {
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
-	}
+	}	
 	
 	@Test
-	void editABarOfSoap() throws Exception {
+	void editScent() throws Exception {
 		
-		BarOfSoap soap = new BarOfSoap();
+		Scent scent = new Scent();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
+        HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps";        
+		uri += port + "/scentrecipe";        
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.PUT, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
@@ -65,16 +65,15 @@ public class SoapBarControllerTest {
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
 	}
-
-	@Test
-	void deleteABarOfSoap() throws Exception {
+	
+	void deleteScent() throws Exception {
 		
-		BarOfSoap soap = new BarOfSoap();
+		Scent scent = new Scent();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
+        HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps";        
+		uri += port + "/scentrecipe/0001";        
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
@@ -83,16 +82,32 @@ public class SoapBarControllerTest {
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
 	}
-
-	@Test
-	void getOneBarOfSoap() throws Exception {
+	
+	void getAllScents() throws Exception {
 		
-		
+		Scent scent = new Scent();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(headers);	
+        HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps/0001";        
+		uri += port + "/scentrecipe";        
+		
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
+
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
+
+	}
+
+	void getOneScents() throws Exception {
+		
+		Scent scent = new Scent();
+		HttpHeaders headers = new HttpHeaders();
+        headers.set("access-token", "123456789");
+        HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
+		String uri = "http://localhost:";
+		uri += port + "/scentrecipe/00001";        
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
@@ -102,21 +117,4 @@ public class SoapBarControllerTest {
 
 	}
 	
-	@Test
-	void getAllBarsOfSoap() throws Exception {
-		
-		
-		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
-        HttpEntity<?> entity = new HttpEntity<>(headers);	
-		String uri = "http://localhost:";
-		uri += port + "/soaps";        
-		
-		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, ResponseModel.class);
-		ResponseModel bdy = response.getBody();
-
-		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
-
-	}
 }

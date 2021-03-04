@@ -26,6 +26,7 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -37,6 +38,7 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -49,6 +51,7 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -60,6 +63,7 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -71,6 +75,7 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	

@@ -27,9 +27,9 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
-		resp.setCode(200);
+		resp.setMessage("Not Implemented");
+
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
-	
 	}
 	
 	@PutMapping(value = "/soaps")
@@ -38,6 +38,7 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -49,6 +50,7 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -59,6 +61,7 @@ public class SoapBarController {
 			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
@@ -69,6 +72,7 @@ public class SoapBarController {
 			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
+		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	

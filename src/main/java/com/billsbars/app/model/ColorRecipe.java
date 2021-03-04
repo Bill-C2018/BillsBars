@@ -10,9 +10,9 @@ public class ColorRecipe {
 	private ArrayList<SimpleColor> colors = new ArrayList<SimpleColor>();
 	private String finalColor;
 	
-	ColorRecipe() {}
+	public ColorRecipe() {}
 	
-	ColorRecipe(ArrayList<SimpleColor> colors, String finalColor) {
+	public ColorRecipe(ArrayList<SimpleColor> colors, String finalColor) {
 		this.colors = colors;
 		this.finalColor = finalColor;
 	}
