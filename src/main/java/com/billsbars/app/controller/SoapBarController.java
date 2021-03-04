@@ -1,4 +1,4 @@
-package com.billsbars.controller;
+package com.billsbars.app.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,18 +12,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.billsbars.model.ResponseModel;
-import com.billsbars.model.Scent;
+import com.billsbars.app.model.BarOfSoap;
+import com.billsbars.app.model.ResponseModel;
+import com.billsbars.app.model.Scent;
 
 @RestController
-public class ScentRecipeController {
+public class SoapBarController {
 	
-	Logger logger = LoggerFactory.getLogger(ScentRecipeController.class);
-			
-	@PostMapping(value ="scentrecipe")
-	ResponseEntity<ResponseModel> createScent(
+	Logger logger = LoggerFactory.getLogger(SoapBarController.class);
+	
+	@PostMapping(value = "/soaps")
+	ResponseEntity<ResponseModel> createASoap(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
 		
@@ -31,50 +32,46 @@ public class ScentRecipeController {
 	
 	}
 	
-	@PutMapping(value = "scentrecipe")
-	ResponseEntity<ResponseModel> editScent(
+	@PutMapping(value = "/soaps")
+	ResponseEntity<ResponseModel> edotASoap(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
-	}	
-
+	}
 	
-	@DeleteMapping(value = "scentrecipe/{scentId}")
-	ResponseEntity<ResponseModel> deleteScent(
+	@DeleteMapping(value = "/soaps")
+	ResponseEntity<ResponseModel> deleteASoap(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
-	}	
+	}
 	
-	@GetMapping(value = "scentrecipe/{scentId}")
-	ResponseEntity<ResponseModel> getOneScent(
-			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+	@GetMapping(value = "/soaps")
+	ResponseEntity<ResponseModel> getAllSoap(
+			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
-	}	
+	}
 
-	@GetMapping(value = "scentrecipe")
-	ResponseEntity<ResponseModel> getAllScents(
-			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+	@GetMapping(value = "/soaps/{soapId}")
+	ResponseEntity<ResponseModel> getOneSoap(
+			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
-	}	
-
-
+	}
+	
 }

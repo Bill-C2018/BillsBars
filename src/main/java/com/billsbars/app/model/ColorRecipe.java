@@ -1,4 +1,4 @@
-package com.billsbars.model;
+package com.billsbars.app.model;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,8 @@
-package com.billsbars.service;
+package com.billsbars.app.service;
 
 import java.util.List;
 
-import com.billsbars.model.ColorRecipe;
+import com.billsbars.app.model.ColorRecipe;
 
 public interface ColorRecipesService {
 	
