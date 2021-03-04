@@ -27,9 +27,8 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
-		resp.setCode(200);
+
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
-	
 	}
 	
 	@PutMapping(value = "/soaps")
