@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.billsbars.app.model.ColorRecipe;
 
-@Service
+@Service("ColorRecipesService")
 public class ColorRecipesServiceImp implements ColorRecipesService {
 	
 	Logger logger = LoggerFactory.getLogger(ColorRecipesServiceImp.class);

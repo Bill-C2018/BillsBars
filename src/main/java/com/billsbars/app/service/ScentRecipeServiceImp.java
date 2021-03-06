@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.billsbars.app.model.Scent;
 
-@Service
+@Service("ScentRecipeService")
 public class ScentRecipeServiceImp implements ScentRecipeService {
 
 	Logger logger = LoggerFactory.getLogger(ScentRecipeServiceImp.class);

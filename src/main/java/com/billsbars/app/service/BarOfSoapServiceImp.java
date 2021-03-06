@@ -2,8 +2,11 @@ package com.billsbars.app.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.billsbars.app.model.BarOfSoap;
 
+@Service("BarOfSoapService")
 public class BarOfSoapServiceImp implements BarOfSoapService {
 
 	@Override
