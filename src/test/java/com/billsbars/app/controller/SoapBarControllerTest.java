@@ -1,5 +1,6 @@
 package com.billsbars.app.controller;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -13,9 +14,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.billsbars.app.model.BarOfSoap;
 import com.billsbars.app.model.ResponseModel;
+import com.billsbars.app.service.BarOfSoapService;
+import com.billsbars.app.service.UserAuthenticationService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,8 +32,8 @@ public class SoapBarControllerTest {
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
-
 	
+
 	@Test
 	void createABarOfSoap() throws Exception {
 		

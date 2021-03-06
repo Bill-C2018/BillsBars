@@ -14,7 +14,6 @@ public class UserAuthenticationServiceImp implements UserAuthenticationService {
 	TokenRepositoryService tokenRepositoryService;
 
 	public UserAuthenticationServiceImp(TokenRepositoryService service) {
-		System.out.println("in user auth constructor");
 		this.tokenRepositoryService = service;		
 	}
 	

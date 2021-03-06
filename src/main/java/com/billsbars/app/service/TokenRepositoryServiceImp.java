@@ -23,8 +23,6 @@ public class TokenRepositoryServiceImp implements TokenRepositoryService {
 
 	@Override
 	public Optional<String> getRoleByToken(String t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		return tokenRepo.findByToken(t);	}
 
 }
