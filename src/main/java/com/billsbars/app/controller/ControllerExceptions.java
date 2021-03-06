@@ -20,7 +20,7 @@ public class ControllerExceptions {
 	
 	@ExceptionHandler(AccessDeniedException.class)
 	ResponseEntity<ResponseModel> handleAccessDenied() {
-		logger.info("**** In Access Denied");
+		logger.info("|*** Access Denied Exception ***|");
 		
 		ResponseModel resp = new ResponseModel();
 		resp.setCode(403);

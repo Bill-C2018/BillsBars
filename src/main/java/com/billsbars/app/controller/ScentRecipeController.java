@@ -2,6 +2,7 @@ package com.billsbars.app.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,13 +13,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.billsbars.app.AccessDeniedException;
 import com.billsbars.app.model.ResponseModel;
 import com.billsbars.app.model.Scent;
+import com.billsbars.app.service.UserAuthenticationService;
 
 @RestController
 public class ScentRecipeController {
 	
 	Logger logger = LoggerFactory.getLogger(ScentRecipeController.class);
+	
+	@Autowired
+	private UserAuthenticationService userAuthenticationService;
 			
 	@PostMapping(value ="scentrecipe")
 	ResponseEntity<ResponseModel> createScent(
@@ -26,6 +32,11 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -38,6 +49,11 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -51,6 +67,11 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -63,6 +84,11 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -75,6 +101,11 @@ public class ScentRecipeController {
 			@RequestBody Scent scent) {
 		
 		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);

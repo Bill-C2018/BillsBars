@@ -54,6 +54,11 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -66,6 +71,11 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -77,6 +87,11 @@ public class SoapBarController {
 			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -88,6 +103,11 @@ public class SoapBarController {
 			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
