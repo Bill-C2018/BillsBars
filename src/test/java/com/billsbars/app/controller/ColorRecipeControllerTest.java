@@ -2,6 +2,8 @@ package com.billsbars.app.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -16,8 +18,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import com.billsbars.app.model.BaseColor;
 import com.billsbars.app.model.ColorRecipe;
 import com.billsbars.app.model.ResponseModel;
+import com.billsbars.app.model.SimpleColor;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @TestInstance(Lifecycle.PER_CLASS)
@@ -29,25 +33,36 @@ public class ColorRecipeControllerTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 	
+
 	@Test
 	void createColor() throws Exception {
+		
+		SimpleColor simpleColor = new SimpleColor(BaseColor.PURPLE,20);
+		ArrayList<SimpleColor> newColor = new ArrayList<SimpleColor>();
+		newColor.add(simpleColor);
 
-		ColorRecipe colorRecipe = new ColorRecipe();
+		ColorRecipe colorRecipe = new ColorRecipe(newColor,"TEST Lavender Purple");
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
         HttpEntity<?> entity = new HttpEntity<>(colorRecipe,headers);	
 		String uri = "http://localhost:";
 		uri += port + "/colorrecipe";        
-		
-		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
+		response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
+
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Color Created")).isTrue();
+
+		response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
+		bdy = response.getBody();
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Color Deleted")).isTrue();
 
 	}	
-	
+
 	@Test
 	void editColor() throws Exception {
 
@@ -66,11 +81,15 @@ public class ColorRecipeControllerTest {
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
 	}	
-	
+/*
 	@Test
 	void deleteColor() throws Exception {
 
-		ColorRecipe colorRecipe = new ColorRecipe();
+		SimpleColor simpleColor = new SimpleColor(BaseColor.PURPLE,20);
+		ArrayList<SimpleColor> newColor = new ArrayList<SimpleColor>();
+		newColor.add(simpleColor);
+
+		ColorRecipe colorRecipe = new ColorRecipe(newColor,"TEST Lavender Purple");
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
@@ -85,7 +104,7 @@ public class ColorRecipeControllerTest {
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
 	}	
-
+*/
 	@Test
 	void getAllColors() throws Exception {
 

@@ -2,6 +2,8 @@ package com.billsbars.app.controller;
 
 
 
+import javax.validation.ValidationException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.billsbars.app.AccessDeniedException;
+import com.billsbars.app.DuplicateRecordException;
 import com.billsbars.app.model.ResponseModel;
 
 @RestControllerAdvice
@@ -27,5 +30,24 @@ public class ControllerExceptions {
 		resp.setMessage("Access Denied");
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(resp);
 	}
+	
+	@ExceptionHandler(ValidationException.class)
+	ResponseEntity<ResponseModel> validationExceptionHandler(ValidationException e) {
+		logger.info("validation execption {}",e.getMessage());
+		ResponseModel resp = new ResponseModel();
+		resp.setCode(400);
+		resp.setMessage(e.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+	}
+
+	@ExceptionHandler(DuplicateRecordException.class)
+	ResponseEntity<ResponseModel> duplicateRecordExceptionHandler(DuplicateRecordException e) {
+		logger.info("Duplicate record exception {}",e.getMessage());
+		ResponseModel resp = new ResponseModel();
+		resp.setCode(400);
+		resp.setMessage(e.getMessage());
+		return ResponseEntity.status(HttpStatus.CONFLICT).body(resp);
+	}
+
 
 }
