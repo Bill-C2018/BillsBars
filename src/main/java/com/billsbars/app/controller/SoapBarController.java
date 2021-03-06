@@ -36,9 +36,11 @@ public class SoapBarController {
 			@RequestBody BarOfSoap soap) {
 
 		ResponseModel resp = new ResponseModel();
+		logger.info("***  here");
 		if (!userAuthenticationService.isUserAdmin(r)) {
 			throw new AccessDeniedException("access denied");
 		}
+		logger.info("**** out from here");
 
 		
 		resp.setMessage("Not Implemented");
