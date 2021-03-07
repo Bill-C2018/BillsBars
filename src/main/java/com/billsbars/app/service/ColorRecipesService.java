@@ -14,7 +14,7 @@ public interface ColorRecipesService {
 	
 	List<ColorRecipe> getAllColors();
 	
-	ColorRecipe getOneColor(String colorId);
+	List<ColorRecipe> getOneColor(String colorId);
 	
 	
 

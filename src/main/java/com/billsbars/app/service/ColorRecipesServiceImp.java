@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.billsbars.app.DuplicateRecordException;
+import com.billsbars.app.RecordNotFoundException;
 import com.billsbars.app.dao.ColorRecipesRepository;
 import com.billsbars.app.model.ColorRecipe;
 
@@ -45,8 +46,13 @@ public class ColorRecipesServiceImp implements ColorRecipesService {
 
 	@Override
 	public ColorRecipe editColor(ColorRecipe colorRecipe) {
-		// TODO Auto-generated method stub
-		return null;
+		Optional<ColorRecipe> res= colorRecipesRepository.findById(colorRecipe.getId());
+		if (res.isPresent()) {
+			colorRecipesRepository.save(colorRecipe);
+			return colorRecipe;
+		} else {
+			throw new RecordNotFoundException("color not found" + colorRecipe.getFinalColor());
+		}
 	}
 
 	@Override
@@ -56,9 +62,9 @@ public class ColorRecipesServiceImp implements ColorRecipesService {
 	}
 
 	@Override
-	public ColorRecipe getOneColor(String colorId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ColorRecipe> getOneColor(String colorId) {
+		List<ColorRecipe> colors = colorRecipesRepository.findByFinalColor(colorId);
+		return colors;
 	}
 	
 	

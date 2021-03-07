@@ -10,6 +10,6 @@ public class ResponseModel {
 	private int code;
 	private String message;
 	
-	ArrayList<ColorRecipe> recipes;
+	ArrayList<ColorRecipe> colorRecipes;
 
 }

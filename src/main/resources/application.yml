@@ -6,14 +6,15 @@ server:
 spring:
   data:
     mongodb:
-#      host: mongo
-      host: 192.168.1.210
+      host: mongo
       port: 27017
       database: BillsBars
+      
 ---
   
 spring: 
-  profiles: dev
+  profiles:
+    active: dev
   data: 
     mongodb: 
       host: 192.168.1.210
@@ -22,6 +23,14 @@ spring:
 
 
 ---
+
+spring: 
+  profiles: test
+  data: 
+    mongodb: 
+      host: 192.168.1.210
+      port: 27017 
+      database: TestBillsBars
 
 
 
