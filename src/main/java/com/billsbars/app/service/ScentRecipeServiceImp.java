@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.billsbars.app.model.Scent;
+import com.billsbars.app.model.SimpleScent;
 
 @Service("ScentRecipeService")
 public class ScentRecipeServiceImp implements ScentRecipeService {
@@ -14,7 +14,7 @@ public class ScentRecipeServiceImp implements ScentRecipeService {
 	Logger logger = LoggerFactory.getLogger(ScentRecipeServiceImp.class);
 			
 	@Override
-	public boolean createScent(Scent scent) {
+	public boolean createScent(SimpleScent scent) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -26,19 +26,19 @@ public class ScentRecipeServiceImp implements ScentRecipeService {
 	}
 
 	@Override
-	public Scent editScent(Scent scent) {
+	public SimpleScent editScent(SimpleScent scent) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Scent> getAllScents() {
+	public List<SimpleScent> getAllScents() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Scent getOneScent(String scentId) {
+	public SimpleScent getOneScent(String scentId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

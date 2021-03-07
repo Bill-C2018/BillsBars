@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.billsbars.app.AccessDeniedException;
 import com.billsbars.app.model.ResponseModel;
-import com.billsbars.app.model.Scent;
+import com.billsbars.app.model.SimpleScent;
 import com.billsbars.app.service.UserAuthenticationService;
 
 @RestController
@@ -29,7 +29,7 @@ public class ScentRecipeController {
 	@PostMapping(value ="scentrecipe")
 	ResponseEntity<ResponseModel> createScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+			@RequestBody SimpleScent scent) {
 		
 		ResponseModel resp = new ResponseModel();
 
@@ -46,7 +46,7 @@ public class ScentRecipeController {
 	@PutMapping(value = "scentrecipe")
 	ResponseEntity<ResponseModel> editScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+			@RequestBody SimpleScent scent) {
 		
 		ResponseModel resp = new ResponseModel();
 
@@ -64,7 +64,7 @@ public class ScentRecipeController {
 	@DeleteMapping(value = "scentrecipe/{scentId}")
 	ResponseEntity<ResponseModel> deleteScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+			@RequestBody SimpleScent scent) {
 		
 		ResponseModel resp = new ResponseModel();
 
@@ -81,7 +81,7 @@ public class ScentRecipeController {
 	@GetMapping(value = "scentrecipe/{scentId}")
 	ResponseEntity<ResponseModel> getOneScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+			@RequestBody SimpleScent scent) {
 		
 		ResponseModel resp = new ResponseModel();
 
@@ -98,7 +98,7 @@ public class ScentRecipeController {
 	@GetMapping(value = "scentrecipe")
 	ResponseEntity<ResponseModel> getAllScents(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody Scent scent) {
+			@RequestBody SimpleScent scent) {
 		
 		ResponseModel resp = new ResponseModel();
 
