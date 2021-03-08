@@ -1,5 +1,6 @@
 package com.billsbars.app.controller;
 
+import javax.validation.Valid;
 import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,11 +33,20 @@ public class ScentRecipeController {
 	
 	@Autowired
 	private UserAuthenticationService userAuthenticationService;
-			
+
+	@ExceptionHandler(ValidationException.class)
+	ResponseEntity<ResponseModel> validationExceptionHandler(ValidationException e) {
+		logger.info("|***  Validation execption {}  ***|",e.getMessage());
+		ResponseModel resp = new ResponseModel();
+		resp.setCode(400);
+		resp.setMessage(e.getMessage());
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+	}
+
 	@PostMapping(value ="scentrecipe")
 	ResponseEntity<ResponseModel> createScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ScentRecipe scent) {
+			@Valid @RequestBody ScentRecipe scent) {
 		
 		ResponseModel resp = new ResponseModel();
 

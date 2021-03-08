@@ -35,7 +35,7 @@ public class ScentRecipeControllerTest {
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
-
+/*
 	@Test
 	void createScent() throws Exception {
 		
@@ -60,6 +60,30 @@ public class ScentRecipeControllerTest {
 		assertThat(bdy.getMessage().equalsIgnoreCase("Scent created")).isTrue();
 
 	}	
+*/
+	@Test
+	void createScentNoName() throws Exception {
+
+		ArrayList<SingleScent> scentRecipe = new ArrayList<SingleScent>();
+		scentRecipe.add(new SingleScent(BaseScents.BLUEBERRY_COBBLER,8));
+		scentRecipe.add(new SingleScent(BaseScents.VANILLA,2));
+		ScentRecipe scent = new ScentRecipe("",scentRecipe);
+		
+		HttpHeaders headers = new HttpHeaders();
+        headers.set("access-token", "123456789");
+        HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
+		String uri = "http://localhost:";
+		uri += port + "/scentrecipe";        
+
+
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
+
+		assertThat(response.getStatusCode() == HttpStatus.BAD_REQUEST).isTrue();
+		assertThat(bdy.getMessage().contains("Validation")).isTrue();
+
+	}	
+
 	
 	@Test
 	void editScent() throws Exception {
