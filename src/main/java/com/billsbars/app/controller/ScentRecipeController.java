@@ -34,14 +34,6 @@ public class ScentRecipeController {
 	@Autowired
 	private UserAuthenticationService userAuthenticationService;
 
-	@ExceptionHandler(ValidationException.class)
-	ResponseEntity<ResponseModel> validationExceptionHandler(ValidationException e) {
-		logger.info("|***  Validation execption {}  ***|",e.getMessage());
-		ResponseModel resp = new ResponseModel();
-		resp.setCode(400);
-		resp.setMessage(e.getMessage());
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
-	}
 
 	@PostMapping(value ="scentrecipe")
 	ResponseEntity<ResponseModel> createScent(

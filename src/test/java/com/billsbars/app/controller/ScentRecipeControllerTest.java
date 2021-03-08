@@ -80,7 +80,7 @@ public class ScentRecipeControllerTest {
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.BAD_REQUEST).isTrue();
-		assertThat(bdy.getMessage().contains("Validation")).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Argument validation failed")).isTrue();
 
 	}	
 

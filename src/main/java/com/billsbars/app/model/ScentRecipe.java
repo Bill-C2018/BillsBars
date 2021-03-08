@@ -13,7 +13,7 @@ public class ScentRecipe {
 	
 	@Id
 	public String id;
-	@NotBlank
+	@NotBlank(message="Scent name can not be empty")
 	String name;
 	@NotNull
 	ArrayList<SingleScent> baseScents;
