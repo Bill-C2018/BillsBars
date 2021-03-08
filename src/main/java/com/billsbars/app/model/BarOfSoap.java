@@ -9,20 +9,23 @@ public class BarOfSoap {
 	private BarTypes barType;
 	private BaseTypes baseType;
 	private ColorRecipe color;
-	private SimpleScent scent;
+	private ScentRecipe scent;
 	private int count;
+	private MoldStyle moldStyle;
 	private boolean isOrganic = false;
 	
 	public BarOfSoap() { }
 	
 	public BarOfSoap(BarTypes type, BaseTypes baseType, ColorRecipe color,
-					SimpleScent scent,boolean organic) {
+					ScentRecipe scent,MoldStyle moldStyle,boolean organic) {
 		
 		this.barType = type;
 		this.baseType = baseType;
 		this.color = color;
 		this.scent = scent;
 		this.isOrganic = organic; 
+		this.moldStyle = moldStyle;
+		
 	}
 	
 

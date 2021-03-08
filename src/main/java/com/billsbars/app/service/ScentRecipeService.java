@@ -2,19 +2,19 @@ package com.billsbars.app.service;
 
 import java.util.List;
 
-import com.billsbars.app.model.SimpleScent;
+import com.billsbars.app.model.ScentRecipe;
 
 public interface ScentRecipeService {
 	
-	boolean createScent(SimpleScent scent);
+	boolean createScent(ScentRecipe scent);
 	
-	boolean deleteScent(String scentId);
+	boolean deleteScent(String scentName);
 	
-	SimpleScent editScent(SimpleScent scent);
+	ScentRecipe editScent(ScentRecipe scent);
 	
-	List<SimpleScent> getAllScents();
+	List<ScentRecipe> getAllScents();
 	
-	SimpleScent getOneScent(String scentId);
+	List<ScentRecipe> getOneScent(String scentName);
 		
 		
 	

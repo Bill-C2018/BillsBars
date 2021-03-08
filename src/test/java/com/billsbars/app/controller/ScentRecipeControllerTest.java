@@ -22,7 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 import com.billsbars.app.model.BarOfSoap;
 import com.billsbars.app.model.BaseScents;
 import com.billsbars.app.model.ResponseModel;
-import com.billsbars.app.model.SimpleScent;
+import com.billsbars.app.model.ScentRecipe;
 import com.billsbars.app.model.SingleScent;
 
 @ActiveProfiles("test")
@@ -43,26 +43,28 @@ public class ScentRecipeControllerTest {
 		ArrayList<SingleScent> scentRecipe = new ArrayList<SingleScent>();
 		scentRecipe.add(new SingleScent(BaseScents.BLUEBERRY_COBBLER,8));
 		scentRecipe.add(new SingleScent(BaseScents.VANILLA,2));
-		SimpleScent scent = new SimpleScent("Blueberry Vanilla",scentRecipe);
+		ScentRecipe scent = new ScentRecipe("Blueberry Vanilla",scentRecipe);
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
 		uri += port + "/scentrecipe";        
-		
-		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
+
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
+
+		response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Scent created")).isTrue();
 
 	}	
 	
 	@Test
 	void editScent() throws Exception {
 		
-		SimpleScent scent = new SimpleScent();
+		ScentRecipe scent = new ScentRecipe();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
@@ -79,7 +81,7 @@ public class ScentRecipeControllerTest {
 	
 	void deleteScent() throws Exception {
 		
-		SimpleScent scent = new SimpleScent();
+		ScentRecipe scent = new ScentRecipe();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
@@ -96,7 +98,7 @@ public class ScentRecipeControllerTest {
 	
 	void getAllScents() throws Exception {
 		
-		SimpleScent scent = new SimpleScent();
+		ScentRecipe scent = new ScentRecipe();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
@@ -113,7 +115,7 @@ public class ScentRecipeControllerTest {
 
 	void getOneScents() throws Exception {
 		
-		SimpleScent scent = new SimpleScent();
+		ScentRecipe scent = new ScentRecipe();
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
