@@ -40,9 +40,14 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 	}
 
 	@Override
-	public boolean deleteSoap(String soapId) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteSoap(BarOfSoap soap) {
+		BarOfSoap soaps = this.checkInventory(soap);
+		if (soaps == null) {
+			return false;
+		} else {
+			this.updateBarCount(soaps,false);
+			return true;
+		}
 	}
 
 	@Override
@@ -97,6 +102,10 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 			Inventory i = inv.get();
 			i.setCount(i.getCount() + (add ? 1:-1));
 			inventoryRepository.save(i);
+			if(i.getCount() == 0) {
+				inventoryRepository.deleteById(i.getId());
+				soapBarRepository.deleteById(soap.getId());
+			}
 		}
 	}
 

@@ -74,17 +74,23 @@ public class SoapBarController {
 	@DeleteMapping(value = "/soaps")
 	ResponseEntity<ResponseModel> deleteASoap(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody BarOfSoap soap) {
+			@Valid @RequestBody BarOfSoap soap) {
 		
 		ResponseModel resp = new ResponseModel();
-
+		
 		if (!userAuthenticationService.isUserAdmin(r)) {
 			throw new AccessDeniedException("access denied");
 		}
 
+		if(barOfSoapService.deleteSoap(soap)) {
+			resp.setMessage("Soap deleted");
+			return ResponseEntity.status(HttpStatus.OK).body(resp);			
+		}
+
+
 		resp.setMessage("Not Implemented");
 		
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
+		return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(resp);
 	
 	}
 	

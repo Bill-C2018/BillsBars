@@ -100,7 +100,20 @@ public class SoapBarControllerTest {
 	@Test
 	void deleteABarOfSoap() throws Exception {
 		
-		BarOfSoap soap = new BarOfSoap();
+		SimpleColor simpleColor = new SimpleColor(BaseColor.PURPLE,20);
+		ArrayList<SimpleColor> newColor = new ArrayList<SimpleColor>();
+		newColor.add(simpleColor);
+		ColorRecipe colorRecipe = new ColorRecipe(newColor,"TEST Lavender Purple");
+
+		ArrayList<SingleScent> scentRecipe = new ArrayList<SingleScent>();
+		scentRecipe.add(new SingleScent(BaseScents.BLUEBERRY_COBBLER,8));
+		scentRecipe.add(new SingleScent(BaseScents.VANILLA,2));
+		ScentRecipe scent = new ScentRecipe("Blueberry Vanilla",scentRecipe);
+
+		
+		BarOfSoap soap = new BarOfSoap(BarTypes.FULLBAR,
+				BaseTypes.GOATSMILK,colorRecipe,scent,MoldStyle.STANDARD,true);
+		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
         HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
@@ -111,7 +124,7 @@ public class SoapBarControllerTest {
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Soap deleted")).isTrue();
 
 	}
 
