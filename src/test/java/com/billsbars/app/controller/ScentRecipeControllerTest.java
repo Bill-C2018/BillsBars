@@ -35,7 +35,7 @@ public class ScentRecipeControllerTest {
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
-/*
+
 	@Test
 	void createScent() throws Exception {
 		
@@ -60,7 +60,7 @@ public class ScentRecipeControllerTest {
 		assertThat(bdy.getMessage().equalsIgnoreCase("Scent created")).isTrue();
 
 	}	
-*/
+
 	@Test
 	void createScentNoName() throws Exception {
 
@@ -86,7 +86,7 @@ public class ScentRecipeControllerTest {
 
 	
 	@Test
-	void editScent() throws Exception {
+	void editScentFailsOnEmpty() throws Exception {
 		
 		ScentRecipe scent = new ScentRecipe();
 		HttpHeaders headers = new HttpHeaders();
@@ -98,8 +98,8 @@ public class ScentRecipeControllerTest {
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.PUT, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
 
-		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
+		assertThat(response.getStatusCode() == HttpStatus.BAD_REQUEST).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Argument validation failed")).isTrue();
 
 	}
 	

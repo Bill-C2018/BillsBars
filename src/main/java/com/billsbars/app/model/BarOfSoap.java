@@ -1,16 +1,27 @@
 package com.billsbars.app.model;
 
+import org.springframework.data.annotation.Id;
+
 import lombok.Data;
+import javax.validation.constraints.NotNull;
 
 @Data
 public class BarOfSoap {
 	
 
+	@Id
+	public String id;
+	@NotNull
 	private BarTypes barType;
+	@NotNull
 	private BaseTypes baseType;
+	@NotNull
 	private ColorRecipe color;
+	@NotNull
 	private ScentRecipe scent;
+	@NotNull
 	private int count;
+	@NotNull
 	private MoldStyle moldStyle;
 	private boolean isOrganic = false;
 	

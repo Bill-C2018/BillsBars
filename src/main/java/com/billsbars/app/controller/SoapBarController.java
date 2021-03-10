@@ -1,5 +1,7 @@
 package com.billsbars.app.controller;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,19 +35,23 @@ public class SoapBarController {
 	@PostMapping(value = "/soaps")
 	ResponseEntity<ResponseModel> createASoap (
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody BarOfSoap soap) {
+			@Valid @RequestBody BarOfSoap soap) {
 
 		ResponseModel resp = new ResponseModel();
 
 		if (!userAuthenticationService.isUserAdmin(r)) {
 			throw new AccessDeniedException("access denied");
 		}
-
+		
+		
+		if(barOfSoapService.createSoap(soap)) {
+			resp.setMessage("Soap added");
+			return ResponseEntity.status(HttpStatus.OK).body(resp);			
+		}
 
 		
-		resp.setMessage("Not Implemented");
-
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
+		resp.setMessage("Error adding soap");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}
 	
 	@PutMapping(value = "/soaps")

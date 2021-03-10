@@ -62,13 +62,15 @@ public class ScentRecipeController {
 	@PutMapping(value = "scentrecipe")
 	ResponseEntity<ResponseModel> editScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ScentRecipe scent) {
+			@Valid @RequestBody ScentRecipe scent) {
 		
 		ResponseModel resp = new ResponseModel();
 
 		if (!userAuthenticationService.isUserAdmin(r)) {
 			throw new AccessDeniedException("access denied");
 		}
+		
+
 
 		resp.setMessage("Not Implemented");
 		
@@ -77,10 +79,10 @@ public class ScentRecipeController {
 	}	
 
 	
-	@DeleteMapping(value = "scentrecipe/{scentId}")
+	@DeleteMapping(value = "scentrecipe")
 	ResponseEntity<ResponseModel> deleteScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ScentRecipe scent) {
+			@Valid @RequestBody ScentRecipe scent) {
 		
 		ResponseModel resp = new ResponseModel();
 
@@ -88,6 +90,8 @@ public class ScentRecipeController {
 			throw new AccessDeniedException("access denied");
 		}
 
+		boolean res = scentRecipeService.deleteScent(scent.getName());
+		
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
