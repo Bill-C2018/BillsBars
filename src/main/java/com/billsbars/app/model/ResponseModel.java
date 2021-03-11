@@ -11,6 +11,10 @@ public class ResponseModel {
 	private int code;
 	private String message;
 	
+	ArrayList<BarTypes> barTypes;
+	ArrayList<MoldStyle> moldStyles;
+	ArrayList<BaseColor> baseColors;
+	ArrayList<BaseScents> baseScents;
 	ArrayList<ColorRecipe> colorRecipes;
 	List<FieldErrorMessage> fieldErrors;
 
