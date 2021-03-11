@@ -8,7 +8,7 @@ public interface BarOfSoapService {
 	
 	boolean createSoap(BarOfSoap soap);
 	
-	boolean deleteSoap(String soapId);
+	boolean deleteSoap(BarOfSoap soap);
 	
 	BarOfSoap editSoap(BarOfSoap soap);
 	
