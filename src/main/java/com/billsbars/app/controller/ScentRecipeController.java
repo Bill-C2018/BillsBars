@@ -91,10 +91,18 @@ public class ScentRecipeController {
 		}
 
 		boolean res = scentRecipeService.deleteScent(scent.getName());
+		if(res == true) {
+			resp.setMessage("Scent deleted");
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
 		
-		resp.setMessage("Not Implemented");
+		resp.setMessage("Scent NOT deleted");
+		return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(resp);
+	
 		
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
+		
+		
+		
 	
 	}	
 	

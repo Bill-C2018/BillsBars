@@ -9,5 +9,5 @@ import com.billsbars.app.model.BarOfSoap;
 
 public interface SoapBarsRepository extends MongoRepository<BarOfSoap, String> {
 
-	List<BarOfSoap> findByBarTypeAndBaseType(String barType, String baseType);
+	BarOfSoap findByBarTypeAndBaseTypeAndScent(String barType, String baseType,String scent);
 }

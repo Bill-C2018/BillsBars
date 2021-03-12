@@ -62,7 +62,7 @@ public class SoapBarControllerTest {
 
 		
 		BarOfSoap soap = new BarOfSoap(BarTypes.FULLBAR,
-				BaseTypes.GOATSMILK,colorRecipe,scent,MoldStyle.STANDARD,true);
+				BaseTypes.GOATSMILK,colorRecipe.getFinalColor(),scent.getName(),MoldStyle.STANDARD,true);
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
@@ -112,7 +112,7 @@ public class SoapBarControllerTest {
 
 		
 		BarOfSoap soap = new BarOfSoap(BarTypes.FULLBAR,
-				BaseTypes.GOATSMILK,colorRecipe,scent,MoldStyle.STANDARD,true);
+				BaseTypes.GOATSMILK,colorRecipe.getFinalColor(),scent.getName(),MoldStyle.STANDARD,true);
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
