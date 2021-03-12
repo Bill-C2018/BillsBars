@@ -116,9 +116,8 @@ public class ColorRecipeController {
 			throw new ValidationException("Invalid params");
 		}
 		
-		resp.setMessage("Not Implemented");
-		
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
+		resp.setMessage("Color Not Deleted");
+		return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(resp);
 
 		
 	}

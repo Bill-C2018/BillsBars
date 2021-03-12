@@ -70,17 +70,11 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 	
 	private BarOfSoap checkInventory(BarOfSoap soap) {
 
-		List<BarOfSoap> soaps = soapBarRepository.findByBarTypeAndBaseType(
-				soap.getBarType().toString(), soap.getBaseType().toString());
+		BarOfSoap soaps = soapBarRepository.findByBarTypeAndBaseTypeAndScent(
+				soap.getBarType().toString(), soap.getBaseType().toString(),soap.getScent());
 		
-		for (BarOfSoap s:  soaps) {
-			if (s.getScent().getName().equalsIgnoreCase(soaps.get(0).getScent().getName())) {
-				return s;
-			}
-					
-		}
 		
-		return null;
+		return soaps;
 		
 	}
 	

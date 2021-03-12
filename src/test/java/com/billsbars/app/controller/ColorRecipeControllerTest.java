@@ -118,7 +118,10 @@ public class ColorRecipeControllerTest {
 		assertThat(colors != null).isTrue();
 		assertThat(colors.get(0) != null).isTrue();
 		assertThat(colors.get(0).getFinalColor().equals(acolor.getFinalColor()));
-		
+
+		response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity3, ResponseModel.class);
+		bdy = response.getBody();
+
 
 	}	
 
@@ -130,7 +133,7 @@ public class ColorRecipeControllerTest {
 		ArrayList<SimpleColor> newColor = new ArrayList<SimpleColor>();
 		newColor.add(simpleColor);
 
-		ColorRecipe colorRecipe = new ColorRecipe(newColor,"TEST Lavender Purple");
+		ColorRecipe colorRecipe = new ColorRecipe(newColor,"TEST Lavender Purple 2");
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "123456789");
@@ -138,11 +141,12 @@ public class ColorRecipeControllerTest {
 		String uri = "http://localhost:";
 		uri += port + "/colorrecipe";        
 		
-		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
+		response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Color Deleted")).isTrue();
 
 	}	
 

@@ -58,6 +58,10 @@ public class ScentRecipeControllerTest {
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("Scent created")).isTrue();
+		response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
+		bdy = response.getBody();
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Scent deleted")).isTrue();
 
 	}	
 
