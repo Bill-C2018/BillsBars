@@ -70,7 +70,7 @@ public class ColorRecipeController {
 		
 	}
 	
-	@PutMapping(value = "colorrecipe")
+	@PutMapping(value = "/colorrecipe")
 	ResponseEntity<ResponseModel> editColor (
 			@RequestHeader(value = "access-token", required = true) String r,
 			@RequestBody ColorRecipe colorRecipe) {
@@ -96,7 +96,7 @@ public class ColorRecipeController {
 
 	}
 	
-	@DeleteMapping(value = "colorrecipe")
+	@DeleteMapping(value = "/colorrecipe")
 	ResponseEntity<ResponseModel> deleteColor (
 			@RequestHeader(value = "access-token", required = true) String r,
 			@RequestBody ColorRecipe colorRecipe) {
@@ -122,7 +122,7 @@ public class ColorRecipeController {
 		
 	}
 	
-	@GetMapping(value ="colorrecipe")
+	@GetMapping(value ="/colorrecipe")
 	ResponseEntity<ResponseModel> getAllColors (
 			@RequestHeader(value = "access-token", required = true) String r) {
 
@@ -137,7 +137,7 @@ public class ColorRecipeController {
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
-	@GetMapping(value ="colorrecipe/{colorName}")
+	@GetMapping(value ="/colorrecipe/{colorName}")
 	ResponseEntity<ResponseModel> getOneColor (
 			@PathVariable String colorName,
 			@RequestHeader(value = "access-token", required = true) String r) {

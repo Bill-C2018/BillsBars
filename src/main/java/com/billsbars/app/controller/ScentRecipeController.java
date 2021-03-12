@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +36,7 @@ public class ScentRecipeController {
 	private UserAuthenticationService userAuthenticationService;
 
 
-	@PostMapping(value ="scentrecipe")
+	@PostMapping(value ="/scentrecipe")
 	ResponseEntity<ResponseModel> createScent(
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody ScentRecipe scent) {
@@ -59,7 +60,7 @@ public class ScentRecipeController {
 	
 	}
 	
-	@PutMapping(value = "scentrecipe")
+	@PutMapping(value = "/scentrecipe")
 	ResponseEntity<ResponseModel> editScent(
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody ScentRecipe scent) {
@@ -79,7 +80,7 @@ public class ScentRecipeController {
 	}	
 
 	
-	@DeleteMapping(value = "scentrecipe")
+	@DeleteMapping(value = "/scentrecipe")
 	ResponseEntity<ResponseModel> deleteScent(
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody ScentRecipe scent) {
@@ -106,10 +107,10 @@ public class ScentRecipeController {
 	
 	}	
 	
-	@GetMapping(value = "scentrecipe/{scentId}")
+	@GetMapping(value = "/scentrecipe/{scentId}")
 	ResponseEntity<ResponseModel> getOneScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ScentRecipe scent) {
+			@PathVariable String scentName) {
 		
 		ResponseModel resp = new ResponseModel();
 
@@ -123,10 +124,9 @@ public class ScentRecipeController {
 	
 	}	
 
-	@GetMapping(value = "scentrecipe")
+	@GetMapping(value = "/scentrecipe")
 	ResponseEntity<ResponseModel> getAllScents(
-			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ScentRecipe scent) {
+			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
 
