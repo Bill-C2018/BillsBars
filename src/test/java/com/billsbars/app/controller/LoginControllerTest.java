@@ -2,6 +2,8 @@ package com.billsbars.app.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -31,10 +33,14 @@ public class LoginControllerTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 	
-	@Test
-	void loginCustomer() throws Exception {
-		
-		CustomerModel customer = new CustomerModel("billc@yahoo.com","billc-2018","Password1");
+	private String myToken = "";
+	
+	CustomerModel customer = new CustomerModel("billc@yahoo.com","billc-2018","Password1");
+
+	
+	@BeforeAll
+	public void setUp() {
+
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", "");
         HttpEntity<?> entity = new HttpEntity<>(customer,headers);	
@@ -44,29 +50,39 @@ public class LoginControllerTest {
 		ResponseModel bdy = response.getBody();
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("User Created")).isTrue();
+
+	}
+	
+	@AfterAll
+	public void cleanUp() {
+
+		HttpHeaders headers3 = new HttpHeaders();
+        headers3.set("access-token", myToken);
+        HttpEntity<?> entity3 = new HttpEntity<>(customer,headers3);	
+        String uri = "http://localhost:";
+		uri += port + "/customer";      
+
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity3, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Customer deleted")).isTrue();
+
+	}
+	
+	@Test
+	void loginCustomer() throws Exception {
 		
 		HttpHeaders headers2 = new HttpHeaders();
         headers2.set("access-token", "");
         HttpEntity<?> entity2 = new HttpEntity<>(customer,headers2);	
 		String uri2 = "http://localhost:";
 		uri2 += port + "/login";   
-		response = this.restTemplate.exchange(uri2, HttpMethod.POST, entity2, ResponseModel.class);
-		bdy = response.getBody();
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri2, HttpMethod.POST, entity2, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("Logged in")).isTrue();
 		assertThat(bdy.getToken() != null).isTrue();
-
-		
-		HttpHeaders headers3 = new HttpHeaders();
-        headers3.set("access-token", bdy.getToken());
-        HttpEntity<?> entity3 = new HttpEntity<>(customer,headers3);	
-        uri = "http://localhost:";
-		uri += port + "/customer";      
-
-		response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity3, ResponseModel.class);
-		bdy = response.getBody();
-		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMessage().equalsIgnoreCase("Customer deleted")).isTrue();
+		this.myToken = bdy.getToken();
 
 	
 	}
