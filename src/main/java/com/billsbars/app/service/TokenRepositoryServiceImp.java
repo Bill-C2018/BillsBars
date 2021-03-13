@@ -17,8 +17,7 @@ public class TokenRepositoryServiceImp implements TokenRepositoryService {
 
 	@Override
 	public void createRecord(Token t) {
-		// TODO Auto-generated method stub
-
+		tokenRepo.save(t.getToken(), t.getRole(), t.getUserName());
 	}
 
 	@Override

@@ -52,5 +52,9 @@ public class CustomerServiceImpLocal implements CustomerService {
 	public CustomerModel getOneCustomer(String userName) {
 		return customerRepository.findByUserName(userName);
 	}
+	
+	public CustomerModel checkCustomerLogin(String userName, String pword) {
+		return customerRepository.findByUserNameAndUserPword(userName, pword);
+	}
 
 }

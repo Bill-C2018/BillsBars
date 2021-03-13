@@ -15,5 +15,7 @@ public interface CustomerService {
 	List<CustomerModel> getAllCustomers();
 	
 	CustomerModel getOneCustomer(String userName);
+	
+	CustomerModel checkCustomerLogin(String userName, String pword);
 
 }

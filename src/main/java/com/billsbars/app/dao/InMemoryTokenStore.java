@@ -12,7 +12,11 @@ import org.springframework.stereotype.Repository;
 @Repository("InMemTokenStore")
 public class InMemoryTokenStore {
 	
-	
+/*
+ * TODO
+ * should probably just bite the bullet and store the
+ * entire token object	
+ */
 	
 	
 	
