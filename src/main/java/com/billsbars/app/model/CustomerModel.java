@@ -22,5 +22,13 @@ public class CustomerModel {
 	{
 		this.userRole = "USER";
 	}
+	
+	public CustomerModel() {} 
+	
+	public CustomerModel(String emailAddy,String userName,String userPword) {
+		this.emailAddy = emailAddy;
+		this.userName = userName;
+		this.userPword = userPword;
+	}
 
 }

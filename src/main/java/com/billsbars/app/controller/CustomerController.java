@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.billsbars.app.AccessDeniedException;
 import com.billsbars.app.model.CustomerModel;
 import com.billsbars.app.model.ResponseModel;
 import com.billsbars.app.service.CustomerService;
+import com.billsbars.app.service.UserAuthenticationService;
 
 
 @RestController
@@ -28,6 +30,10 @@ public class CustomerController {
 	Logger logger = LoggerFactory.getLogger(CustomerController.class);
 	
 	@Autowired
+	private UserAuthenticationService userAuthenticationService;
+
+	
+	@Autowired
 	private CustomerService customerService;
 	
 	@PostMapping(value = "/customer")
@@ -35,10 +41,14 @@ public class CustomerController {
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody CustomerModel customer) {
 		
-		ResponseModel resp = new ResponseModel();	
+		ResponseModel resp = new ResponseModel();
 		
-		
-		resp.setMessage("Not Implemented");
+		CustomerModel user = customerService.createCustomer(customer);
+		if( user == null ) {
+			resp.setMessage("Failed to create user");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+		}
+		resp.setMessage("User Created");
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 	
@@ -51,7 +61,8 @@ public class CustomerController {
 		
 		
 		resp.setMessage("Not Implemented");
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
+		return ResponseEntity.status(HttpStatus.OK).body(resp);		
+		
 	}
 	
 	@DeleteMapping(value = "/customer")
@@ -59,11 +70,21 @@ public class CustomerController {
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody CustomerModel customer) {
 		
-		ResponseModel resp = new ResponseModel();	
+		ResponseModel resp = new ResponseModel();
+		
+		if (!userAuthenticationService.isUserAdminOrSelf(r,customer.getUserName())) {
+			throw new AccessDeniedException("access denied");
+		}
+
+		if (customerService.deleteCustomer(customer) == true) {
+			resp.setMessage("Customer deleted");
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
 		
 		
-		resp.setMessage("Not Implemented");
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
+		resp.setMessage("Not Deleted");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
+
 	}
 	
 	@GetMapping(value = "/customer/{username}")
@@ -76,6 +97,7 @@ public class CustomerController {
 		
 		resp.setMessage("Not Implemented");
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
+	}
 
 
 

@@ -21,16 +21,32 @@ public class UserAuthenticationServiceImp implements UserAuthenticationService {
 	public boolean isUserAdmin(String token) {
 		
 		if (token != null) {
-	    	Optional<String> userRole = tokenRepositoryService.getRoleByToken(token);
+	    	Optional<String[]> userRole = tokenRepositoryService.getRoleByToken(token);
 	    	if(userRole.isPresent()) {
-	    		String role = userRole.get();
-	    		if(role != null && (role.equals("ADMIN"))) {
+	    		String role[] = userRole.get();
+	    		if(role != null && (role[0].equals("ADMIN"))) {
 	    			return true;
 	    		} 
 	    	}
 		}
 
 		return false;
+	}
+	
+	@Override
+	public boolean isUserAdminOrSelf(String token, String userName) {
+		if (token != null) {
+	    	Optional<String[]> userRole = tokenRepositoryService.getRoleByToken(token);
+	    	if(userRole.isPresent()) {
+	    		String role[] = userRole.get();
+	    		if(role != null && ((role[0].equals("ADMIN")) || role[1].equals(userName))) {
+	    			return true;
+	    		} 
+	    	}
+		}
+
+		return false;
+		
 	}
 
 }

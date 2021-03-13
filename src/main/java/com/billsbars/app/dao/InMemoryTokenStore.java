@@ -16,11 +16,12 @@ public class InMemoryTokenStore {
 	
 	
 	
-	private Map<String,String> tokenStore = 
-			new HashMap<String, String>();
+	private Map<String,String[]> tokenStore = 
+			new HashMap<String, String[]>();
 	
 	{
-		tokenStore.put("123456789","ADMIN");
+		String[] data = {"ADMIN","BILLC"};
+		tokenStore.put("123456789",data);
 	}
 /*	
  * need to figure this bit out .. seems it always returns null 
@@ -33,16 +34,18 @@ public class InMemoryTokenStore {
 	}
 */
 	
-	public void save(String token, String role) {
-		tokenStore.put(token, role);
+	public void save(String token, String role, String userName) {
+		String[] data = {role,userName};
+		
+		tokenStore.put(token, data);
 	}
 	
-	public Optional<String> findByToken(String token) {
+	public Optional<String[]> findByToken(String token) {
 
-		Optional<String> empty = Optional.empty();
+		Optional<String[]> empty = Optional.empty();
 		if (tokenStore.containsKey(token)) {
-			String ret = tokenStore.get(token);
-			Optional<String> optRet = Optional.of(ret);
+			String[] ret = tokenStore.get(token);
+			Optional<String[]> optRet = Optional.of(ret);
 			return optRet;
 		}
 		return empty;

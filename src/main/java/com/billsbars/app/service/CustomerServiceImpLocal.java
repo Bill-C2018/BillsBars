@@ -2,17 +2,28 @@ package com.billsbars.app.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.billsbars.app.DuplicateRecordException;
+import com.billsbars.app.dao.LocalCustomersRepository;
 import com.billsbars.app.model.CustomerModel;
 
 @Service("CustomerServiceImpLocal")
 public class CustomerServiceImpLocal implements CustomerService {
+	
+	@Autowired
+	private LocalCustomersRepository customerRepository;
 
 	@Override
 	public CustomerModel createCustomer(CustomerModel customer) {
-		// TODO Auto-generated method stub
-		return null;
+		CustomerModel exists = customerRepository.findByUserName(customer.getUserName());
+		if (exists != null) {
+			throw new DuplicateRecordException("That name is already taken");
+		}
+		customerRepository.save(customer);
+		exists = customerRepository.findByUserName(customer.getUserName());
+		return exists;
 	}
 
 	@Override
@@ -23,7 +34,11 @@ public class CustomerServiceImpLocal implements CustomerService {
 
 	@Override
 	public boolean deleteCustomer(CustomerModel customer) {
-		// TODO Auto-generated method stub
+		CustomerModel exists = customerRepository.findByUserName(customer.getUserName());
+		if (exists != null) {
+			customerRepository.deleteById(exists.getId());
+			return true;
+		}
 		return false;
 	}
 
@@ -35,8 +50,7 @@ public class CustomerServiceImpLocal implements CustomerService {
 
 	@Override
 	public CustomerModel getOneCustomer(String userName) {
-		// TODO Auto-generated method stub
-		return null;
+		return customerRepository.findByUserName(userName);
 	}
 
 }

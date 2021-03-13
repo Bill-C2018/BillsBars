@@ -22,7 +22,7 @@ public class TokenRepositoryServiceImp implements TokenRepositoryService {
 	}
 
 	@Override
-	public Optional<String> getRoleByToken(String t) {
+	public Optional<String[]> getRoleByToken(String t) {
 		return tokenRepo.findByToken(t);	}
 
 }
