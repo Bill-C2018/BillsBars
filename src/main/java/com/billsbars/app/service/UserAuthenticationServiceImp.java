@@ -18,13 +18,22 @@ public class UserAuthenticationServiceImp implements UserAuthenticationService {
 	}
 	
 	@Override
-	public boolean isUserAdmin(String token) {
+	public boolean isUserAdmin(String t) {
+		Token tok = tokenRepositoryService.getCompleteTokenFromTokenString(t);
+		if (tok != null) {
+			return isUserAdmin(tok);
+		} else {
+			return false;
+		}
+	}
+	@Override
+	public boolean isUserAdmin(Token token) {
 		
 		if (token != null) {
-	    	Optional<String[]> userRole = tokenRepositoryService.getRoleByToken(token);
-	    	if(userRole.isPresent()) {
-	    		String role[] = userRole.get();
-	    		if(role != null && (role[0].equals("ADMIN"))) {
+	    	Optional<Token> t = tokenRepositoryService.getRoleByToken(token);
+	    	if(t.isPresent()) {
+	    		Token tok = t.get();
+	    		if(tok.getRole() != null && (tok.getRole().equals("ADMIN"))) {
 	    			return true;
 	    		} 
 	    	}
@@ -34,12 +43,24 @@ public class UserAuthenticationServiceImp implements UserAuthenticationService {
 	}
 	
 	@Override
-	public boolean isUserAdminOrSelf(String token, String userName) {
+	public boolean isUserAdminOrSelf(String t, String userName) {
+
+		Token tok = tokenRepositoryService.getCompleteTokenFromTokenString(t);
+		if (tok != null) {
+			return isUserAdminOrSelf(tok,userName);
+		} else {
+			return false;
+		}
+		
+	}
+	
+	@Override
+	public boolean isUserAdminOrSelf(Token token, String userName) {
 		if (token != null) {
-	    	Optional<String[]> userRole = tokenRepositoryService.getRoleByToken(token);
-	    	if(userRole.isPresent()) {
-	    		String role[] = userRole.get();
-	    		if(role != null && ((role[0].equals("ADMIN")) || role[1].equals(userName))) {
+	    	Optional<Token> t = tokenRepositoryService.getRoleByToken(token);
+	    	if(t.isPresent()) {
+	    		Token tok = t.get();
+	    		if(tok.getToken() != null && ((tok.getRole().equals("ADMIN")) || tok.getUserName().equals(userName))) {
 	    			return true;
 	    		} 
 	    	}

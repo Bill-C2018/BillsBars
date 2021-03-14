@@ -8,5 +8,7 @@ public interface TokenRepositoryService {
 
 	public void createRecord(Token t);
 	
-	public Optional<String[]> getRoleByToken(String t);
+	public Optional<Token> getRoleByToken(Token t);
+	
+	public Token getCompleteTokenFromTokenString(String t);
 }
