@@ -11,6 +11,7 @@ public class ResponseModel {
 	private int code;
 	private String message;
 	private String token;
+	private String role;
 	
 	ArrayList<BarTypes> barTypes;
 	ArrayList<MoldStyle> moldStyles;

@@ -41,6 +41,7 @@ public class LoginController {
 			t.createTokenString(validLogin);
 			tokenRepositoryService.createRecord(t);
 			resp.setToken(t.getToken());
+			resp.setRole(t.getRole());
 			resp.setMessage("Logged in");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
 		}
