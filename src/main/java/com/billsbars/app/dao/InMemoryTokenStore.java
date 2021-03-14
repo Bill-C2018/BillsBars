@@ -8,19 +8,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Repository;
+
+import com.billsbars.app.model.Token;
  
 @Repository("InMemTokenStore")
 public class InMemoryTokenStore {
 	
+/*
+ * TODO
+ * should probably just bite the bullet and store the
+ * entire token object	
+ */
 	
 	
 	
-	
-	private Map<String,String> tokenStore = 
-			new HashMap<String, String>();
+	private Map<String,Token> tokenStore = 
+			new HashMap<String, Token>();
 	
 	{
-		tokenStore.put("123456789","ADMIN");
+		Token data = new Token();
+		data.setRole("ADMIN");
+		data.setToken("123456789");
+		data.setUserName("Billc");
+		tokenStore.put("123456789",data);
 	}
 /*	
  * need to figure this bit out .. seems it always returns null 
@@ -33,19 +43,29 @@ public class InMemoryTokenStore {
 	}
 */
 	
-	public void save(String token, String role) {
-		tokenStore.put(token, role);
+	public void save(Token token) {
+		
+		tokenStore.put(token.getToken(),token);
 	}
 	
-	public Optional<String> findByToken(String token) {
+	public Optional<Token> findByToken(Token token) {
 
-		Optional<String> empty = Optional.empty();
-		if (tokenStore.containsKey(token)) {
-			String ret = tokenStore.get(token);
-			Optional<String> optRet = Optional.of(ret);
+		Optional<Token> empty = Optional.empty();
+		if (tokenStore.containsKey(token.getToken())) {
+			Token ret = tokenStore.get(token.getToken());
+			Optional<Token> optRet = Optional.of(ret);
 			return optRet;
 		}
 		return empty;
 	}	
+	
+	public Token getFullToken(String t) {
+		
+		if(tokenStore.containsKey(t)) {
+			return tokenStore.get(t);
+		} else {
+			return null;
+		}
+	}
 
 }
