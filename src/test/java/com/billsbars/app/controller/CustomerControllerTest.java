@@ -2,6 +2,7 @@ package com.billsbars.app.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -30,6 +31,27 @@ public class CustomerControllerTest {
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
+	
+	private String myToken = "";
+	
+	CustomerModel customer = new CustomerModel("admin@google.com","admin","Password1");
+
+	
+	@BeforeAll
+	public void setUp() {
+		HttpHeaders headers2 = new HttpHeaders();
+        headers2.set("access-token", "");
+        HttpEntity<?> entity2 = new HttpEntity<>(customer,headers2);	
+		String uri2 = "http://localhost:";
+		uri2 += port + "/login";   
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri2, HttpMethod.POST, entity2, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Logged in")).isTrue();
+		assertThat(bdy.getToken() != null).isTrue();
+		this.myToken = bdy.getToken();
+	}
+
 
 	@Test
 	void createCustomer() throws Exception {
@@ -37,7 +59,7 @@ public class CustomerControllerTest {
 		CustomerModel customer = new CustomerModel("bob@google.com","billc","howdy");
 
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(customer,headers);	
 		String uri = "http://localhost:";
 		uri += port + "/customer";        

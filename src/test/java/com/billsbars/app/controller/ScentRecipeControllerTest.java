@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -21,6 +22,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import com.billsbars.app.model.BarOfSoap;
 import com.billsbars.app.model.BaseScents;
+import com.billsbars.app.model.CustomerModel;
 import com.billsbars.app.model.ResponseModel;
 import com.billsbars.app.model.ScentRecipe;
 import com.billsbars.app.model.SingleScent;
@@ -35,6 +37,28 @@ public class ScentRecipeControllerTest {
 	
 	@Autowired
 	private TestRestTemplate restTemplate;
+	
+	private String myToken = "";
+	
+	CustomerModel customer = new CustomerModel("admin@google.com","admin","Password1");
+
+	
+	@BeforeAll
+	public void setUp() {
+		HttpHeaders headers2 = new HttpHeaders();
+        headers2.set("access-token", "");
+        HttpEntity<?> entity2 = new HttpEntity<>(customer,headers2);	
+		String uri2 = "http://localhost:";
+		uri2 += port + "/login";   
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri2, HttpMethod.POST, entity2, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Logged in")).isTrue();
+		assertThat(bdy.getToken() != null).isTrue();
+		this.myToken = bdy.getToken();
+	}
+
+
 
 	@Test
 	void createScent() throws Exception {
@@ -46,7 +70,7 @@ public class ScentRecipeControllerTest {
 		ScentRecipe scent = new ScentRecipe("Blueberry Vanilla",scentRecipe);
 		
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
 		uri += port + "/scentrecipe";        
@@ -74,7 +98,7 @@ public class ScentRecipeControllerTest {
 		ScentRecipe scent = new ScentRecipe("",scentRecipe);
 		
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
 		uri += port + "/scentrecipe";        
@@ -94,7 +118,7 @@ public class ScentRecipeControllerTest {
 		
 		ScentRecipe scent = new ScentRecipe();
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
 		uri += port + "/scentrecipe";        
@@ -111,7 +135,7 @@ public class ScentRecipeControllerTest {
 		
 		ScentRecipe scent = new ScentRecipe();
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
 		uri += port + "/scentrecipe/0001";        
@@ -128,7 +152,7 @@ public class ScentRecipeControllerTest {
 		
 		ScentRecipe scent = new ScentRecipe();
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
 		uri += port + "/scentrecipe";        
@@ -145,7 +169,7 @@ public class ScentRecipeControllerTest {
 		
 		ScentRecipe scent = new ScentRecipe();
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(scent,headers);	
 		String uri = "http://localhost:";
 		uri += port + "/scentrecipe/00001";        
