@@ -63,6 +63,7 @@ public class BarTypesController {
 	@GetMapping(value = "/basescents")
 	public ResponseEntity<ResponseModel> getBaseScents() {
 		
+		logger.info("Calling getBaseScents");
 		ResponseModel resp = new ResponseModel();
 		ArrayList<BaseScents> t = new ArrayList<BaseScents>();
 		for (BaseScents type: BaseScents.values()) {

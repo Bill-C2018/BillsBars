@@ -14,6 +14,11 @@ public class SingleScent {
 		this.drops = drops;
 				
 	}
+
+	public SingleScent(String val, int drops) {
+		this.baseScent = BaseScents.valueOf(val);
+		this.drops = drops;
+	}
 	
 
 }
