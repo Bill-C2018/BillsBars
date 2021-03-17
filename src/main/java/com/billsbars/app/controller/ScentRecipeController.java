@@ -1,5 +1,7 @@
 package com.billsbars.app.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.billsbars.app.AccessDeniedException;
 import com.billsbars.app.model.ResponseModel;
 import com.billsbars.app.model.ScentRecipe;
+import com.billsbars.app.model.SingleScent;
 import com.billsbars.app.service.ScentRecipeService;
 import com.billsbars.app.service.UserAuthenticationService;
 
@@ -41,6 +44,23 @@ public class ScentRecipeController {
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody ScentRecipe scent) {
 		
+		logger.info("calling create scent {}",scent);
+		
+/*
+ * Is this actually needed or am i building the web side object incorrectly
+ * however this works both from react and tests so for now its good
+ */
+		ArrayList<SingleScent> newlist = new ArrayList<SingleScent>();
+		ArrayList<SingleScent> inlist = scent.getBaseScents();
+		for (int i = 0; i < inlist.size(); i++) {
+			SingleScent n = 
+					new SingleScent(inlist.get(i).getBaseScent().name(),inlist.get(i).getDrops());
+			newlist.add(n);
+		}
+		
+		ScentRecipe newScent = new ScentRecipe(scent.getName(),newlist);
+		
+		
 		ResponseModel resp = new ResponseModel();
 
 		if (!userAuthenticationService.isUserAdmin(r)) {
@@ -48,7 +68,7 @@ public class ScentRecipeController {
 		}
 
 		if(scent != null) {
-			scentRecipeService.createScent(scent);
+			scentRecipeService.createScent(newScent);
 			resp.setMessage("Scent created");
 			resp.setCode(200);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
