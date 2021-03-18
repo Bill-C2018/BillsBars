@@ -18,6 +18,19 @@ public class ResponseModel {
 	ArrayList<BaseColor> baseColors;
 	ArrayList<BaseScents> baseScents;
 	ArrayList<ColorRecipe> colorRecipes;
+	ArrayList<ScentRecipe> scentRecipes;
 	List<FieldErrorMessage> fieldErrors;
+	String[] scentRecipeNames;
+	String[] colorRecipeNames;
+	
+	public void addScentRecipesAsList(List<ScentRecipe> l) {
+		this.scentRecipes = new ArrayList<ScentRecipe>();
+		this.scentRecipes.addAll(l);
+	}
+	
+	public void addColorRecipesAsList(List<ColorRecipe> l) {
+		this.colorRecipes = new ArrayList<ColorRecipe>();
+		this.colorRecipes.addAll(l);
+	}
 
 }
