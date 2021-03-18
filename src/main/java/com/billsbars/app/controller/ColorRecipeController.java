@@ -48,6 +48,7 @@ public class ColorRecipeController {
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody ColorRecipe colorRecipe) {
 		
+		logger.info("Calling create new color");
 		ResponseModel resp = new ResponseModel();
 
 		if (!userAuthenticationService.isUserAdmin(r)) {

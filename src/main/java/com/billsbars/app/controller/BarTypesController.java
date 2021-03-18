@@ -50,6 +50,7 @@ public class BarTypesController {
 	@GetMapping(value = "/basecolors")
 	public ResponseEntity<ResponseModel> getBaseColors() {
 		
+		logger.info("calling get base colors");
 		ResponseModel resp = new ResponseModel();
 		ArrayList<BaseColor> t = new ArrayList<BaseColor>();
 		for (BaseColor type: BaseColor.values()) {
