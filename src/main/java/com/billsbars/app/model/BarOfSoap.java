@@ -13,9 +13,9 @@ public class BarOfSoap {
 
 	@Id
 	public String id;
-	@NotNull
+	@NotBlank
+	private String soapName;
 	private BarTypes barType;
-	@NotNull
 	private BaseTypes baseType;
 	@NotBlank
 	private String color;
@@ -23,15 +23,15 @@ public class BarOfSoap {
 	private String scent;
 	@NotNull
 	private int count;
-	@NotNull
 	private MoldStyle moldStyle;
 	private boolean isOrganic = false;
 	
 	public BarOfSoap() { }
 	
-	public BarOfSoap(BarTypes type, BaseTypes baseType, String color,
+	public BarOfSoap(String name,BarTypes type, BaseTypes baseType, String color,
 					String scent,MoldStyle moldStyle,boolean organic) {
 		
+		this.soapName = name;
 		this.barType = type;
 		this.baseType = baseType;
 		this.color = color;

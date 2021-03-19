@@ -81,7 +81,7 @@ public class SoapBarControllerTest {
 		ScentRecipe scent = new ScentRecipe("Blueberry Vanilla",scentRecipe);
 
 		
-		BarOfSoap soap = new BarOfSoap(BarTypes.FULLBAR,
+		BarOfSoap soap = new BarOfSoap("Bob", BarTypes.FULLBAR,
 				BaseTypes.GOATSMILK,colorRecipe.getFinalColor(),scent.getName(),MoldStyle.STANDARD,true);
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -131,7 +131,7 @@ public class SoapBarControllerTest {
 		ScentRecipe scent = new ScentRecipe("Blueberry Vanilla",scentRecipe);
 
 		
-		BarOfSoap soap = new BarOfSoap(BarTypes.FULLBAR,
+		BarOfSoap soap = new BarOfSoap("Bob",BarTypes.FULLBAR,
 				BaseTypes.GOATSMILK,colorRecipe.getFinalColor(),scent.getName(),MoldStyle.STANDARD,true);
 		
 		HttpHeaders headers = new HttpHeaders();

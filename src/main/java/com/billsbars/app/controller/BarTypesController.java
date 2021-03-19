@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.billsbars.app.model.BarTypes;
 import com.billsbars.app.model.BaseColor;
 import com.billsbars.app.model.BaseScents;
+import com.billsbars.app.model.BaseTypes;
 import com.billsbars.app.model.ColorRecipe;
 import com.billsbars.app.model.ResponseModel;
 import com.billsbars.app.model.ScentRecipe;
@@ -93,6 +94,7 @@ public class BarTypesController {
 		ResponseModel resp = new ResponseModel();
 		ArrayList<MoldStyle> moldStyles = new ArrayList<MoldStyle>();
 		ArrayList<BarTypes> barTypes = new ArrayList<BarTypes>();
+		ArrayList<BaseTypes> baseTypes = new ArrayList<BaseTypes>();
 		List<ColorRecipe> colors = null;
 		List<ScentRecipe> scents = null;
 		try {
@@ -106,6 +108,10 @@ public class BarTypesController {
 			for (BarTypes type: BarTypes.values()) {
 				barTypes.add(type);
 			}
+			
+			for (BaseTypes wax: BaseTypes.values()) {
+				baseTypes.add(wax);
+			}
 		} catch (Exception e) {
 			resp.setCode(500);
 			resp.setMessage("Error fetching data");
@@ -114,8 +120,10 @@ public class BarTypesController {
 		
 		resp.setMoldStyles(moldStyles);
 		resp.setBarTypes(barTypes);
+		resp.setBaseTypes(baseTypes);
 		String[] c = new String[4];
 		int count = 0;
+		c[count++] = "NONE";
 		for (ColorRecipe ac: colors) {
 			c[count++] = ac.getFinalColor();
 		}
@@ -123,6 +131,7 @@ public class BarTypesController {
 		
 		String[] s = new String[4];
 		count = 0;
+		s[count++] = "NONE";
 		for (ScentRecipe sc: scents) {
 			s[count++] = sc.getName();
 		}

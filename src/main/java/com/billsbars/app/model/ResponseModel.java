@@ -17,6 +17,7 @@ public class ResponseModel {
 	ArrayList<MoldStyle> moldStyles;
 	ArrayList<BaseColor> baseColors;
 	ArrayList<BaseScents> baseScents;
+	ArrayList<BaseTypes> baseTypes;
 	ArrayList<ColorRecipe> colorRecipes;
 	ArrayList<ScentRecipe> scentRecipes;
 	List<FieldErrorMessage> fieldErrors;
