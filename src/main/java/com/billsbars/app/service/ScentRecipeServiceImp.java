@@ -47,8 +47,7 @@ public class ScentRecipeServiceImp implements ScentRecipeService {
 
 	@Override
 	public List<ScentRecipe> getAllScents() {
-		// TODO Auto-generated method stub
-		return null;
+		return scentRecipesRepository.findAll();
 	}
 
 	@Override

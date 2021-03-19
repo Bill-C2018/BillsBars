@@ -70,8 +70,8 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 	
 	private BarOfSoap checkInventory(BarOfSoap soap) {
 
-		BarOfSoap soaps = soapBarRepository.findByBarTypeAndBaseTypeAndScent(
-				soap.getBarType().toString(), soap.getBaseType().toString(),soap.getScent());
+		BarOfSoap soaps = soapBarRepository.findBySoapNameAndBarTypeAndBaseTypeAndScent(
+				soap.getSoapName(), soap.getBarType().toString(), soap.getBaseType().toString(),soap.getScent());
 		
 		
 		return soaps;
@@ -84,7 +84,7 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 		//now get it to get the id 
 		BarOfSoap soaps = this.checkInventory(soap);
 		if(soaps != null) {
-			Inventory inv = new Inventory(soaps.getId(),1);
+			Inventory inv = new Inventory(soap.getSoapName(),soaps.getId(),soap.getCount());
 			inventoryRepository.save(inv);
 		}
 	}
@@ -94,7 +94,7 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 		Optional<Inventory> inv = inventoryRepository.findByBarOfSoapId(soap.getId());
 		if (inv.isPresent()) {
 			Inventory i = inv.get();
-			i.setCount(i.getCount() + (add ? 1:-1));
+			i.setCount(i.getCount() + (add ? soap.getCount():-1));
 			inventoryRepository.save(i);
 			if(i.getCount() == 0) {
 				inventoryRepository.deleteById(i.getId());

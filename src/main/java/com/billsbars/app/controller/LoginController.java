@@ -33,6 +33,8 @@ public class LoginController {
 	ResponseEntity<ResponseModel> login(
 			@Valid @RequestBody CustomerModel customer) {
 		
+		logger.info("Calling login");
+		
 		ResponseModel resp = new ResponseModel();
 		
 		CustomerModel validLogin = customerService.checkCustomerLogin(customer.getUserName(),customer.getUserPword());

@@ -1,6 +1,7 @@
 package com.billsbars.app.controller;
 
 import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.billsbars.app.AccessDeniedException;
 import com.billsbars.app.model.BarOfSoap;
+import com.billsbars.app.model.BarTypes;
+import com.billsbars.app.model.BaseTypes;
+import com.billsbars.app.model.MoldStyle;
 import com.billsbars.app.model.ResponseModel;
 import com.billsbars.app.service.BarOfSoapService;
 import com.billsbars.app.service.UserAuthenticationService;
@@ -36,12 +40,30 @@ public class SoapBarController {
 	ResponseEntity<ResponseModel> createASoap (
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody BarOfSoap soap) {
+		
+		logger.info("Calling create soap");
 
 		ResponseModel resp = new ResponseModel();
 
 		if (!userAuthenticationService.isUserAdmin(r)) {
 			throw new AccessDeniedException("access denied");
 		}
+		
+		
+		String type = soap.getBarType().toString();
+		String butter = soap.getBaseType().toString();
+		String mold = soap.getMoldStyle().toString();
+		
+		if ((type == null || type.trim().isEmpty()) ||
+			(butter == null || butter.trim().isEmpty()) ||
+			(mold == null || mold.trim().isEmpty())) {
+			throw new ValidationException("invalid type or mold");
+		}
+					
+		
+		soap.setBarType(BarTypes.valueOf(type));
+		soap.setBaseType(BaseTypes.valueOf(butter));
+		soap.setMoldStyle(MoldStyle.valueOf(mold));
 		
 		
 		if(barOfSoapService.createSoap(soap)) {

@@ -66,7 +66,7 @@ public class BarTypesControllerTest {
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getBarTypes().size() == 2).isTrue();
+		assertThat(bdy.getBarTypes().size() == 3).isTrue();
 
 		
 	}
@@ -84,7 +84,7 @@ public class BarTypesControllerTest {
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMoldStyles().size() == 4).isTrue();
+		assertThat(bdy.getMoldStyles().size() == 5).isTrue();
 
 		
 	}
@@ -124,6 +124,25 @@ public class BarTypesControllerTest {
 
 		
 	}
+	
+	@Test
+	void getSoapIngrediants() throws Exception {
+		
+		HttpHeaders headers = new HttpHeaders();
+        headers.set("access-token", this.myToken);
+        HttpEntity<?> entity = new HttpEntity<>(headers);	
+		String uri = "http://localhost:";
+		uri += port + "/newsoap";        
+
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
+
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equals("all is good")).isTrue();
+
+		
+	}
+
 
 
 }
