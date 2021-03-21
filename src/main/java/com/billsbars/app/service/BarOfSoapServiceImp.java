@@ -58,8 +58,7 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 
 	@Override
 	public List<BarOfSoap> getAllSoaps() {
-		// TODO Auto-generated method stub
-		return null;
+		return soapBarRepository.findAll();
 	}
 
 	@Override
@@ -96,6 +95,12 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 			Inventory i = inv.get();
 			i.setCount(i.getCount() + (add ? soap.getCount():-1));
 			inventoryRepository.save(i);
+			// we want to keep the count in the soap table synched 
+			//with the inventory count 
+			if (soap.getCount() != i.getCount()) {
+				soap.setCount(i.getCount());
+				soapBarRepository.save(soap);
+			}
 			if(i.getCount() == 0) {
 				inventoryRepository.deleteById(i.getId());
 				soapBarRepository.deleteById(soap.getId());

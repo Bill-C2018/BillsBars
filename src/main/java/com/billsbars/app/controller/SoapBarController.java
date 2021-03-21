@@ -1,5 +1,8 @@
 package com.billsbars.app.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
@@ -77,7 +80,7 @@ public class SoapBarController {
 	}
 	
 	@PutMapping(value = "/soaps")
-	ResponseEntity<ResponseModel> edotASoap(
+	ResponseEntity<ResponseModel> editASoap(
 			@RequestHeader(value = "access-token", required = true) String r,
 			@RequestBody BarOfSoap soap) {
 		
@@ -117,17 +120,21 @@ public class SoapBarController {
 	}
 	
 	@GetMapping(value = "/soaps")
-	ResponseEntity<ResponseModel> getAllSoap(
-			@RequestHeader(value = "access-token", required = true) String r) {
+	ResponseEntity<ResponseModel> getAllSoap() {
 		
 		ResponseModel resp = new ResponseModel();
 
-		if (!userAuthenticationService.isUserAdmin(r)) {
-			throw new AccessDeniedException("access denied");
-		}
+		List<BarOfSoap> soapList = barOfSoapService.getAllSoaps();
 
-		resp.setMessage("Not Implemented");
-		
+		if (soapList != null) {
+			resp.setMessage("list of soaps");
+			ArrayList<BarOfSoap> sl = new ArrayList<BarOfSoap>();
+			sl.addAll(soapList);
+			resp.setListOfSoaps(sl);
+		} else {
+			resp.setMessage("None found");
+		}
+	
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	
 	}

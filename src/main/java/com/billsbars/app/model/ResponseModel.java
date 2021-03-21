@@ -21,6 +21,7 @@ public class ResponseModel {
 	ArrayList<ColorRecipe> colorRecipes;
 	ArrayList<ScentRecipe> scentRecipes;
 	List<FieldErrorMessage> fieldErrors;
+	ArrayList<BarOfSoap> listOfSoaps;
 	String[] scentRecipeNames;
 	String[] colorRecipeNames;
 	
