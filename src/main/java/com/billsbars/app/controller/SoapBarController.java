@@ -131,6 +131,7 @@ public class SoapBarController {
 			ArrayList<BarOfSoap> sl = new ArrayList<BarOfSoap>();
 			sl.addAll(soapList);
 			resp.setListOfSoaps(sl);
+			resp.setMessage("soaps found");
 		} else {
 			resp.setMessage("None found");
 		}

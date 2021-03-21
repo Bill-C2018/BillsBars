@@ -179,7 +179,12 @@ public class SoapBarControllerTest {
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
+		if (bdy.getListOfSoaps() == null) {
+			assertThat(bdy.getMessage().equalsIgnoreCase("None found")).isTrue();
+		} else {
+			assertThat(bdy.getMessage().equalsIgnoreCase("soaps found")).isTrue();
+		}
+		
 
 	}
 }
