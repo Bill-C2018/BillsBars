@@ -45,9 +45,11 @@ public class CustomerController {
 		
 		CustomerModel user = customerService.createCustomer(customer);
 		if( user == null ) {
+			resp.setCode(HttpStatus.BAD_REQUEST.value());
 			resp.setMessage("Failed to create user");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 		}
+		resp.setCode(200);
 		resp.setMessage("User Created");
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}

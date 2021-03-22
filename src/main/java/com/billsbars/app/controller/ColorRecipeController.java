@@ -57,6 +57,7 @@ public class ColorRecipeController {
 
 		if(colorRecipe.getColors() != null && colorRecipe.getColors().size() > 0) {
 			if(colorRecipesService.createColor(colorRecipe)) {
+				resp.setCode(200);
 				resp.setMessage("Color Created");
 				return ResponseEntity.status(HttpStatus.OK).body(resp);
 			}
@@ -84,6 +85,7 @@ public class ColorRecipeController {
 
 		if(colorRecipe.getColors() != null && colorRecipe.getColors().size() > 0) {
 				ColorRecipe newColor = colorRecipesService.editColor(colorRecipe); 
+				resp.setCode(200);
 				resp.setMessage("Color updated");
 				ArrayList<ColorRecipe> color = new ArrayList<ColorRecipe>();
 				color.add(newColor);
@@ -110,6 +112,7 @@ public class ColorRecipeController {
 
 		if(colorRecipe.getColors() != null && colorRecipe.getColors().size() > 0) {
 			if(colorRecipesService.deleteColor(colorRecipe)) {
+				resp.setCode(200);
 				resp.setMessage("Color Deleted");
 				return ResponseEntity.status(HttpStatus.OK).body(resp);
 			}
@@ -133,6 +136,7 @@ public class ColorRecipeController {
 			throw new AccessDeniedException("access denied");
 		}
 
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -153,6 +157,7 @@ public class ColorRecipeController {
 		if(colorName != null) {
 			List<ColorRecipe> colors = colorRecipesService.getOneColor(colorName);
 			if(colors.size() == 1) {
+				resp.setCode(200);
 				resp.setMessage("Colors found");
 				resp.setColorRecipes((ArrayList<ColorRecipe>) colors);
 				return ResponseEntity.status(HttpStatus.OK).body(resp);

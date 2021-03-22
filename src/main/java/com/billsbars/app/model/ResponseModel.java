@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 public class ResponseModel {
 	
-	private int code;
+	private String code;
 	private String message;
 	private String token;
 	private String role;
@@ -25,6 +25,11 @@ public class ResponseModel {
 	String[] scentRecipeNames;
 	String[] colorRecipeNames;
 	
+	{
+		this.code = "777";
+		this.message = "forgot to set code and message in body";
+	}
+	
 	public void addScentRecipesAsList(List<ScentRecipe> l) {
 		this.scentRecipes = new ArrayList<ScentRecipe>();
 		this.scentRecipes.addAll(l);
@@ -33,6 +38,14 @@ public class ResponseModel {
 	public void addColorRecipesAsList(List<ColorRecipe> l) {
 		this.colorRecipes = new ArrayList<ColorRecipe>();
 		this.colorRecipes.addAll(l);
+	}
+	
+	public void setCode(int val) {
+		this.code = Integer.toString(val);
+	}
+	
+	public void setCode(String val) {
+		this.code = val;
 	}
 
 }
