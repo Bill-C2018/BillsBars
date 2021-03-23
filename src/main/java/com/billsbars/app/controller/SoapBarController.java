@@ -9,14 +9,19 @@ import javax.validation.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.billsbars.app.AccessDeniedException;
@@ -27,6 +32,7 @@ import com.billsbars.app.model.MoldStyle;
 import com.billsbars.app.model.ResponseModel;
 import com.billsbars.app.service.BarOfSoapService;
 import com.billsbars.app.service.UserAuthenticationService;
+
 
 @RestController
 public class SoapBarController {
@@ -119,6 +125,33 @@ public class SoapBarController {
 		return ResponseEntity.status(HttpStatus.I_AM_A_TEAPOT).body(resp);
 	
 	}
+	@GetMapping(value = "/soaps2")
+	ResponseEntity<ResponseModel> getAllSoapPaged(
+			@RequestParam String info) {
+
+		ResponseModel resp = new ResponseModel();
+		
+		int pageNumber = 0;
+		int pageSize = 10;
+		
+		List<BarOfSoap> soapList = new ArrayList<BarOfSoap>();
+		Pageable paging = PageRequest.of(pageNumber, pageSize);
+		Page<BarOfSoap> pageObs = null;
+
+		pageObs = barOfSoapService.getAllSoapsPaged(paging);
+
+		if(pageObs != null) {
+			soapList = pageObs.getContent();
+			resp.setMessage("list of soaps");
+			ArrayList<BarOfSoap> sl = new ArrayList<BarOfSoap>();
+			sl.addAll(soapList);
+			resp.setListOfSoaps(sl);
+			resp.setCode(200);
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
+	}
+	
 	
 	@GetMapping(value = "/soaps")
 	ResponseEntity<ResponseModel> getAllSoap() {
@@ -132,8 +165,10 @@ public class SoapBarController {
 			ArrayList<BarOfSoap> sl = new ArrayList<BarOfSoap>();
 			sl.addAll(soapList);
 			resp.setListOfSoaps(sl);
+			resp.setCode(200);
 			resp.setMessage("soaps found");
 		} else {
+			resp.setCode(200);
 			resp.setMessage("None found");
 		}
 	
