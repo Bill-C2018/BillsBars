@@ -70,11 +70,12 @@ public class SoapBarController {
 		
 		
 		if(barOfSoapService.createSoap(soap)) {
+			resp.setCode(200);
 			resp.setMessage("Soap added");
 			return ResponseEntity.status(HttpStatus.OK).body(resp);			
 		}
 
-		
+		resp.setCode(400);
 		resp.setMessage("Error adding soap");
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(resp);
 	}

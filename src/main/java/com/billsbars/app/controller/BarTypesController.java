@@ -36,6 +36,7 @@ public class BarTypesController {
 	@GetMapping(value = "/bartypes")
 	public ResponseEntity<ResponseModel> getBarTypes() {
 		
+		logger.info("Calling bartypes");
 		ResponseModel resp = new ResponseModel();
 		ArrayList<BarTypes> t = new ArrayList<BarTypes>();
 		for (BarTypes type: BarTypes.values()) {
@@ -43,6 +44,7 @@ public class BarTypesController {
 		}
 		resp.setBarTypes(t);
 		resp.setCode("200");
+		resp.setMessage("BarTypes retrieved = " + Integer.toString(t.size()));
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 		
@@ -56,6 +58,7 @@ public class BarTypesController {
 		}
 		resp.setMoldStyles(t);
 		resp.setCode("200");
+		resp.setMessage("MoldTypes retrieved = " + Integer.toString(t.size()));
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 	
@@ -70,6 +73,7 @@ public class BarTypesController {
 		}
 		resp.setBaseColors(t);
 		resp.setCode("200");
+		resp.setMessage("BaseColors retrieved = " + Integer.toString(t.size()));
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 	
@@ -83,6 +87,7 @@ public class BarTypesController {
 			t.add(type);
 		}
 		resp.setBaseScents(t);
+		resp.setMessage("BaseScents retrieved = " + Integer.toString(t.size()));
 		resp.setCode("200");
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
