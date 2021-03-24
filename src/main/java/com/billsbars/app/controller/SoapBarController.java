@@ -133,6 +133,17 @@ public class SoapBarController {
 		
 		int pageNumber = 0;
 		int pageSize = 10;
+		String[] parts = info.split(":");
+		try {
+			if( parts.length > 0) {
+				pageNumber = Integer.parseInt(parts[0]);
+			}
+			if( parts.length == 2) {
+				pageSize = Integer.parseInt(parts[1]);
+			}
+		} catch (NumberFormatException e) {
+			throw new ValidationException("Invalid page size or number");
+		}
 		
 		List<BarOfSoap> soapList = new ArrayList<BarOfSoap>();
 		Pageable paging = PageRequest.of(pageNumber, pageSize);
@@ -147,6 +158,10 @@ public class SoapBarController {
 			sl.addAll(soapList);
 			resp.setListOfSoaps(sl);
 			resp.setCode(200);
+			resp.setCurrentPage(String.valueOf(pageObs.getNumber()));
+			resp.setTotalItems(String.valueOf(pageObs.getTotalElements()));
+			resp.setTotalPages(String.valueOf(pageObs.getTotalPages()));
+
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);

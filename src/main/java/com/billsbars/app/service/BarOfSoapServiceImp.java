@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.billsbars.app.dao.InventoryRepository;
 import com.billsbars.app.dao.SoapBarsRepository;
 import com.billsbars.app.model.BarOfSoap;
+import com.billsbars.app.model.BarTypes;
 import com.billsbars.app.model.Inventory;
 import java.util.Optional;
 
@@ -28,6 +29,14 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 	
 	@Override
 	public boolean createSoap(BarOfSoap soap) {
+		//weight is based on type
+		if(soap.getBarType() == BarTypes.FULLBAR) {
+			soap.setWeight(4);
+		} else if (soap.getBarType() == BarTypes.DECORATIVEBAR) {
+			soap.setWeight(3);
+		} else if (soap.getBarType() == BarTypes.SMALLDECORATIVE) {
+			soap.setWeight(2);
+		}
 		//if this soap exists we need to inc the inventory count
 		//else start the inventory count
 		BarOfSoap soaps = this.checkInventory(soap);

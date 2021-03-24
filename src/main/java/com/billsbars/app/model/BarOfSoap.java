@@ -23,6 +23,7 @@ public class BarOfSoap {
 	private String scent;
 	@NotNull
 	private int count;
+	private int weight;
 	private MoldStyle moldStyle;
 	private boolean isOrganic = false;
 	

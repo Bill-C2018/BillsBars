@@ -13,17 +13,20 @@ public class ResponseModel {
 	private String token;
 	private String role;
 	
-	ArrayList<BarTypes> barTypes;
-	ArrayList<MoldStyle> moldStyles;
-	ArrayList<BaseColor> baseColors;
-	ArrayList<BaseScents> baseScents;
-	ArrayList<BaseTypes> baseTypes;
-	ArrayList<ColorRecipe> colorRecipes;
-	ArrayList<ScentRecipe> scentRecipes;
-	List<FieldErrorMessage> fieldErrors;
+	private ArrayList<BarTypes> barTypes;
+	private ArrayList<MoldStyle> moldStyles;
+	private ArrayList<BaseColor> baseColors;
+	private ArrayList<BaseScents> baseScents;
+	private ArrayList<BaseTypes> baseTypes;
+	private ArrayList<ColorRecipe> colorRecipes;
+	private ArrayList<ScentRecipe> scentRecipes;
+	private List<FieldErrorMessage> fieldErrors;
 	ArrayList<BarOfSoap> listOfSoaps;
-	String[] scentRecipeNames;
-	String[] colorRecipeNames;
+	private String[] scentRecipeNames;
+	private String[] colorRecipeNames;
+	private String currentPage;
+	private String totalItems;
+	private String totalPages;
 	
 	{
 		this.code = "777";
