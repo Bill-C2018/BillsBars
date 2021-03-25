@@ -14,6 +14,8 @@ import com.billsbars.app.dao.SoapBarsRepository;
 import com.billsbars.app.model.BarOfSoap;
 import com.billsbars.app.model.BarTypes;
 import com.billsbars.app.model.Inventory;
+import com.billsbars.app.model.UpdateSoapBars;
+
 import java.util.Optional;
 
 @Service("BarOfSoapService")
@@ -78,8 +80,20 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 
 	@Override
 	public BarOfSoap getOneSoap(String soapId) {
-		// TODO Auto-generated method stub
+		
+		Optional<BarOfSoap> res = soapBarRepository.findById(soapId);
+		if(res.isPresent()) {
+			return res.get();
+		}
 		return null;
+		
+	}
+	
+	@Override
+	public BarOfSoap getOneBarByName(String soapName) {
+		
+		return soapBarRepository.findBySoapName(soapName);
+		
 	}
 	
 	private BarOfSoap checkInventory(BarOfSoap soap) {
@@ -121,6 +135,20 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 				soapBarRepository.deleteById(soap.getId());
 			}
 		}
+	}
+	
+	public boolean updateSoapCounts(UpdateSoapBars soap) {
+		
+		boolean ret = false;
+		BarOfSoap soapToUpdate = getOneSoap(soap.getBarId());
+		if (soapToUpdate != null) {
+			soapToUpdate.setCount(soap.getCount());
+			updateBarCount(soapToUpdate,true);
+			ret = true;
+		}
+
+		return ret;
+		
 	}
 
 }

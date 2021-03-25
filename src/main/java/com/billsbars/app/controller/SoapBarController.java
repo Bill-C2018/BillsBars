@@ -30,6 +30,7 @@ import com.billsbars.app.model.BarTypes;
 import com.billsbars.app.model.BaseTypes;
 import com.billsbars.app.model.MoldStyle;
 import com.billsbars.app.model.ResponseModel;
+import com.billsbars.app.model.UpdateSoapBars;
 import com.billsbars.app.service.BarOfSoapService;
 import com.billsbars.app.service.UserAuthenticationService;
 
@@ -103,6 +104,31 @@ public class SoapBarController {
 	
 	}
 	
+	@PutMapping(value = "/soaps2")
+	ResponseEntity<ResponseModel> updateSoapCount(
+			@RequestHeader(value = "access-token", required = true) String r,
+			@Valid @RequestBody UpdateSoapBars soap) {
+		
+		logger.info("calling update soap count");
+		ResponseModel resp = new ResponseModel();
+
+		if (!userAuthenticationService.isUserAdmin(r)) {
+			throw new AccessDeniedException("access denied");
+		}
+		
+		boolean res = barOfSoapService.updateSoapCounts(soap);
+		if(res) {
+			resp.setMessage("Soap Updated");
+			resp.setCode(200);
+		} else {
+			resp.setMessage("Not Updated");
+			resp.setCode(400);
+		}
+
+		return ResponseEntity.status(HttpStatus.OK).body(resp);
+	
+	}
+	
 	@DeleteMapping(value = "/soaps")
 	ResponseEntity<ResponseModel> deleteASoap(
 			@RequestHeader(value = "access-token", required = true) String r,
@@ -129,6 +155,7 @@ public class SoapBarController {
 	ResponseEntity<ResponseModel> getAllSoapPaged(
 			@RequestParam String info) {
 
+		logger.info("calling soaps 2 - all soaps paged");
 		ResponseModel resp = new ResponseModel();
 		
 		int pageNumber = 0;
@@ -171,6 +198,7 @@ public class SoapBarController {
 	@GetMapping(value = "/soaps")
 	ResponseEntity<ResponseModel> getAllSoap() {
 		
+		logger.info("calling get all soaps");
 		ResponseModel resp = new ResponseModel();
 
 		List<BarOfSoap> soapList = barOfSoapService.getAllSoaps();
@@ -191,17 +219,23 @@ public class SoapBarController {
 	
 	}
 
-	@GetMapping(value = "/soaps/{soapId}")
-	ResponseEntity<ResponseModel> getOneSoap(
-			@RequestHeader(value = "access-token", required = true) String r) {
+	@GetMapping(value = "/soaps/{soapName}")
+	ResponseEntity<ResponseModel> getOneSoapByName(
+			@PathVariable String soapName) {
+		
+		logger.info("calling get one soap by name");
 		
 		ResponseModel resp = new ResponseModel();
 
-		if (!userAuthenticationService.isUserAdmin(r)) {
-			throw new AccessDeniedException("access denied");
+		BarOfSoap soap = barOfSoapService.getOneBarByName(soapName);
+		if(soap != null) {
+			resp.setCode(200);
+			resp.setMessage("Soap Found");
+			resp.setBarOfSoap(soap);	
+		} else {
+			resp.setCode(404);
+			resp.setMessage("Soap not found");
 		}
-
-		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	

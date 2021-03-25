@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.billsbars.app.model.BarOfSoap;
+import com.billsbars.app.model.UpdateSoapBars;
 
 public interface BarOfSoapService {
 	
@@ -20,6 +21,10 @@ public interface BarOfSoapService {
 	public Page<BarOfSoap> getAllSoapsPaged(Pageable pageable);
 	
 	BarOfSoap getOneSoap(String soapId);
+	
+	BarOfSoap getOneBarByName(String soapName);
+	
+	boolean updateSoapCounts(UpdateSoapBars soap);
 	
 
 }

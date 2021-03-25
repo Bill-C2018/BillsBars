@@ -27,6 +27,7 @@ public class ResponseModel {
 	private String currentPage;
 	private String totalItems;
 	private String totalPages;
+	private BarOfSoap barOfSoap;
 	
 	{
 		this.code = "777";

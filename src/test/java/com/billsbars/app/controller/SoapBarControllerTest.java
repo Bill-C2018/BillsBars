@@ -116,6 +116,47 @@ public class SoapBarControllerTest {
 		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
 
 	}
+	
+	@Test
+	void updateBarCount() throws Exception {
+		
+		SimpleColor simpleColor = new SimpleColor(BaseColor.PURPLE,20);
+		ArrayList<SimpleColor> newColor = new ArrayList<SimpleColor>();
+		newColor.add(simpleColor);
+		ColorRecipe colorRecipe = new ColorRecipe(newColor,"TEST22");
+
+		ArrayList<SingleScent> scentRecipe = new ArrayList<SingleScent>();
+		scentRecipe.add(new SingleScent(BaseScents.BLUEBERRY_COBBLER,8));
+		scentRecipe.add(new SingleScent(BaseScents.VANILLA,2));
+		ScentRecipe scent = new ScentRecipe("Blueberry Vanilla",scentRecipe);
+
+		
+		BarOfSoap soap = new BarOfSoap("Bob", BarTypes.FULLBAR,
+				BaseTypes.GOATSMILK,colorRecipe.getFinalColor(),scent.getName(),MoldStyle.STANDARD,true);
+		
+		HttpHeaders headers = new HttpHeaders();
+        headers.set("access-token", this.myToken);
+        HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
+		String uri = "http://localhost:";
+		uri += port + "/soaps";        
+
+     
+		
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
+
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Soap added")).isTrue();
+
+		response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
+		bdy = response.getBody();
+
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Soap deleted")).isTrue();
+
+	
+	}
+
 
 	@Test
 	void deleteABarOfSoap() throws Exception {
