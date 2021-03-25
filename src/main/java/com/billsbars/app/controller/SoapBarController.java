@@ -104,7 +104,7 @@ public class SoapBarController {
 	
 	}
 	
-	@PutMapping(value = "/soaps2")
+	@PutMapping(value = "/soaps/update")
 	ResponseEntity<ResponseModel> updateSoapCount(
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody UpdateSoapBars soap) {
@@ -219,7 +219,7 @@ public class SoapBarController {
 	
 	}
 
-	@GetMapping(value = "/soaps/{soapName}")
+	@GetMapping(value = "/soaps/single/{soapName}")
 	ResponseEntity<ResponseModel> getOneSoapByName(
 			@PathVariable String soapName) {
 		

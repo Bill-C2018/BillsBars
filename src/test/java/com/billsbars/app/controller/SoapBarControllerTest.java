@@ -29,6 +29,7 @@ import com.billsbars.app.model.ResponseModel;
 import com.billsbars.app.model.ScentRecipe;
 import com.billsbars.app.model.SimpleColor;
 import com.billsbars.app.model.SingleScent;
+import com.billsbars.app.model.UpdateSoapBars;
 import com.billsbars.app.service.BarOfSoapService;
 import com.billsbars.app.service.UserAuthenticationService;
 
@@ -66,6 +67,7 @@ public class SoapBarControllerTest {
 		assertThat(bdy.getToken() != null).isTrue();
 		this.myToken = bdy.getToken();
 	}
+
 
 	@Test
 	void createABarOfSoap() throws Exception {
@@ -131,22 +133,62 @@ public class SoapBarControllerTest {
 		ScentRecipe scent = new ScentRecipe("Blueberry Vanilla",scentRecipe);
 
 		
-		BarOfSoap soap = new BarOfSoap("Bob", BarTypes.FULLBAR,
+		BarOfSoap soap = new BarOfSoap("Bob33", BarTypes.FULLBAR,
 				BaseTypes.GOATSMILK,colorRecipe.getFinalColor(),scent.getName(),MoldStyle.STANDARD,true);
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps";        
-
-     
+		uri += port + "/soaps";     
 		
 		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
 		assertThat(bdy.getMessage().equalsIgnoreCase("Soap added")).isTrue();
+
+/*
+ * Get the bar so we have an id then update count
+ */
+		HttpHeaders headers2 = new HttpHeaders();
+        headers.set("access-token", this.myToken);
+        HttpEntity<?> entity2 = new HttpEntity<>(headers);	
+		String uri2 = "http://localhost:";
+		uri2 += port + "/soaps/single/Bob33";        
+		
+		ResponseEntity<ResponseModel> response2 = this.restTemplate.exchange(uri2, HttpMethod.GET, entity2, ResponseModel.class);
+		ResponseModel bdy2 = response2.getBody();
+
+		assertThat(response2.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy2.getMessage().equalsIgnoreCase("Soap Found")).isTrue();
+		assertThat(bdy2.getBarOfSoap() != null).isTrue();
+		
+		UpdateSoapBars usoap = new UpdateSoapBars();
+		usoap.setBarId(bdy2.getBarOfSoap().getId());
+		usoap.setSoapName(bdy2.getBarOfSoap().getSoapName());
+		usoap.setCount(3);
+		
+		HttpHeaders headers3 = new HttpHeaders();
+        headers.set("access-token", this.myToken);
+        HttpEntity<?> entity3 = new HttpEntity<>(usoap,headers);	
+		String uri3 = "http://localhost:";
+		uri3 += port + "/soaps/update";        
+
+		ResponseEntity<ResponseModel> response3 = this.restTemplate.exchange(uri3, HttpMethod.PUT, entity3, ResponseModel.class);
+		ResponseModel bdy3 = response3.getBody();
+
+		response2 = this.restTemplate.exchange(uri2, HttpMethod.GET, entity2, ResponseModel.class);
+		bdy2 = response2.getBody();
+
+		assertThat(bdy2.getBarOfSoap().getCount() == 4).isTrue();
+		soap.setCount(bdy2.getBarOfSoap().getCount());
+     
+/*
+ * end of update test		
+ */
+		
+		
 
 		response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
 		bdy = response.getBody();
@@ -192,18 +234,53 @@ public class SoapBarControllerTest {
 	@Test
 	void getOneBarOfSoap() throws Exception {
 		
+		SimpleColor simpleColor = new SimpleColor(BaseColor.PURPLE,20);
+		ArrayList<SimpleColor> newColor = new ArrayList<SimpleColor>();
+		newColor.add(simpleColor);
+		ColorRecipe colorRecipe = new ColorRecipe(newColor,"TEST23");
+
+		ArrayList<SingleScent> scentRecipe = new ArrayList<SingleScent>();
+		scentRecipe.add(new SingleScent(BaseScents.BLUEBERRY_COBBLER,8));
+		scentRecipe.add(new SingleScent(BaseScents.VANILLA,2));
+		ScentRecipe scent = new ScentRecipe("Blueberry Vanilla",scentRecipe);
+
+		
+		BarOfSoap soap = new BarOfSoap("Bob23", BarTypes.FULLBAR,
+				BaseTypes.GOATSMILK,colorRecipe.getFinalColor(),scent.getName(),MoldStyle.STANDARD,true);
 		
 		HttpHeaders headers = new HttpHeaders();
         headers.set("access-token", this.myToken);
-        HttpEntity<?> entity = new HttpEntity<>(headers);	
+        HttpEntity<?> entity = new HttpEntity<>(soap,headers);	
 		String uri = "http://localhost:";
-		uri += port + "/soaps/0001";        
+		uri += port + "/soaps";        
 		
-		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, ResponseModel.class);
+
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, ResponseModel.class);
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMessage().equalsIgnoreCase("Not Implemented")).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Soap added")).isTrue();	
+		
+		
+		HttpHeaders headers2 = new HttpHeaders();
+        headers.set("access-token", this.myToken);
+        HttpEntity<?> entity2 = new HttpEntity<>(headers);	
+		String uri2 = "http://localhost:";
+		uri2 += port + "/soaps/single/Bob23";        
+		
+		ResponseEntity<ResponseModel> response2 = this.restTemplate.exchange(uri2, HttpMethod.GET, entity2, ResponseModel.class);
+		ResponseModel bdy2 = response2.getBody();
+
+		assertThat(response2.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy2.getMessage().equalsIgnoreCase("Soap Found")).isTrue();
+		
+		response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, ResponseModel.class);
+		bdy = response.getBody();
+
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Soap deleted")).isTrue();
+		
+		
 
 	}
 	
@@ -228,4 +305,6 @@ public class SoapBarControllerTest {
 		
 
 	}
+
+
 }

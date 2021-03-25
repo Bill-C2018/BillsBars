@@ -39,6 +39,9 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 		} else if (soap.getBarType() == BarTypes.SMALLDECORATIVE) {
 			soap.setWeight(2);
 		}
+		if (soap.getCount() < 1) {
+			soap.setCount(1);
+		}
 		//if this soap exists we need to inc the inventory count
 		//else start the inventory count
 		BarOfSoap soaps = this.checkInventory(soap);
@@ -122,7 +125,7 @@ public class BarOfSoapServiceImp implements BarOfSoapService {
 		Optional<Inventory> inv = inventoryRepository.findByBarOfSoapId(soap.getId());
 		if (inv.isPresent()) {
 			Inventory i = inv.get();
-			i.setCount(i.getCount() + (add ? soap.getCount():-1));
+			i.setCount(i.getCount() + (add ? soap.getCount():(soap.getCount() * -1)));
 			inventoryRepository.save(i);
 			// we want to keep the count in the soap table synched 
 			//with the inventory count 
