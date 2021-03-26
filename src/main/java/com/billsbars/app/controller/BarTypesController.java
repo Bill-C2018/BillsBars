@@ -36,13 +36,15 @@ public class BarTypesController {
 	@GetMapping(value = "/bartypes")
 	public ResponseEntity<ResponseModel> getBarTypes() {
 		
+		logger.info("Calling bartypes");
 		ResponseModel resp = new ResponseModel();
 		ArrayList<BarTypes> t = new ArrayList<BarTypes>();
 		for (BarTypes type: BarTypes.values()) {
 			t.add(type);
 		}
 		resp.setBarTypes(t);
-		resp.setCode(200);
+		resp.setCode("200");
+		resp.setMessage("BarTypes retrieved = " + Integer.toString(t.size()));
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 		
@@ -55,7 +57,8 @@ public class BarTypesController {
 			t.add(type);
 		}
 		resp.setMoldStyles(t);
-		resp.setCode(200);
+		resp.setCode("200");
+		resp.setMessage("MoldTypes retrieved = " + Integer.toString(t.size()));
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 	
@@ -69,7 +72,8 @@ public class BarTypesController {
 			t.add(type);
 		}
 		resp.setBaseColors(t);
-		resp.setCode(200);
+		resp.setCode("200");
+		resp.setMessage("BaseColors retrieved = " + Integer.toString(t.size()));
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 	
@@ -83,7 +87,8 @@ public class BarTypesController {
 			t.add(type);
 		}
 		resp.setBaseScents(t);
-		resp.setCode(200);
+		resp.setMessage("BaseScents retrieved = " + Integer.toString(t.size()));
+		resp.setCode("200");
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 	
@@ -113,7 +118,7 @@ public class BarTypesController {
 				baseTypes.add(wax);
 			}
 		} catch (Exception e) {
-			resp.setCode(500);
+			resp.setCode("500");
 			resp.setMessage("Error fetching data");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(resp);
 		}
@@ -121,7 +126,7 @@ public class BarTypesController {
 		resp.setMoldStyles(moldStyles);
 		resp.setBarTypes(barTypes);
 		resp.setBaseTypes(baseTypes);
-		String[] c = new String[4];
+		String[] c = new String[colors.size()+1];
 		int count = 0;
 		c[count++] = "NONE";
 		for (ColorRecipe ac: colors) {
@@ -129,7 +134,7 @@ public class BarTypesController {
 		}
 		resp.setColorRecipeNames(c);
 		
-		String[] s = new String[4];
+		String[] s = new String[scents.size() + 1];
 		count = 0;
 		s[count++] = "NONE";
 		for (ScentRecipe sc: scents) {
@@ -137,7 +142,7 @@ public class BarTypesController {
 		}
 		resp.setScentRecipeNames(s);
 		
-		resp.setCode(200);
+		resp.setCode("200");
 		resp.setMessage("all is good");
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}

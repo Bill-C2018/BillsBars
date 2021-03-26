@@ -8,21 +8,31 @@ import lombok.Data;
 @Data
 public class ResponseModel {
 	
-	private int code;
+	private String code;
 	private String message;
 	private String token;
 	private String role;
 	
-	ArrayList<BarTypes> barTypes;
-	ArrayList<MoldStyle> moldStyles;
-	ArrayList<BaseColor> baseColors;
-	ArrayList<BaseScents> baseScents;
-	ArrayList<BaseTypes> baseTypes;
-	ArrayList<ColorRecipe> colorRecipes;
-	ArrayList<ScentRecipe> scentRecipes;
-	List<FieldErrorMessage> fieldErrors;
-	String[] scentRecipeNames;
-	String[] colorRecipeNames;
+	private ArrayList<BarTypes> barTypes;
+	private ArrayList<MoldStyle> moldStyles;
+	private ArrayList<BaseColor> baseColors;
+	private ArrayList<BaseScents> baseScents;
+	private ArrayList<BaseTypes> baseTypes;
+	private ArrayList<ColorRecipe> colorRecipes;
+	private ArrayList<ScentRecipe> scentRecipes;
+	private List<FieldErrorMessage> fieldErrors;
+	ArrayList<BarOfSoap> listOfSoaps;
+	private String[] scentRecipeNames;
+	private String[] colorRecipeNames;
+	private String currentPage;
+	private String totalItems;
+	private String totalPages;
+	private BarOfSoap barOfSoap;
+	
+	{
+		this.code = "777";
+		this.message = "forgot to set code and message in body";
+	}
 	
 	public void addScentRecipesAsList(List<ScentRecipe> l) {
 		this.scentRecipes = new ArrayList<ScentRecipe>();
@@ -32,6 +42,14 @@ public class ResponseModel {
 	public void addColorRecipesAsList(List<ColorRecipe> l) {
 		this.colorRecipes = new ArrayList<ColorRecipe>();
 		this.colorRecipes.addAll(l);
+	}
+	
+	public void setCode(int val) {
+		this.code = Integer.toString(val);
+	}
+	
+	public void setCode(String val) {
+		this.code = val;
 	}
 
 }

@@ -66,7 +66,7 @@ public class BarTypesControllerTest {
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getBarTypes().size() == 3).isTrue();
+		assertThat(bdy.getBarTypes().size() == 4).isTrue();
 
 		
 	}
