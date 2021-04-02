@@ -17,12 +17,16 @@ public class TokenRepositoryServiceImp implements TokenRepositoryService {
 
 	@Override
 	public void createRecord(Token t) {
-		// TODO Auto-generated method stub
-
+		tokenRepo.save(t);
 	}
 
 	@Override
-	public Optional<String> getRoleByToken(String t) {
-		return tokenRepo.findByToken(t);	}
+	public Optional<Token> getRoleByToken(Token t) {
+		return tokenRepo.findByToken(t);	
+	}
+	
+	public Token getCompleteTokenFromTokenString(String t) {
+		return tokenRepo.getFullToken(t);
+	}
 
 }

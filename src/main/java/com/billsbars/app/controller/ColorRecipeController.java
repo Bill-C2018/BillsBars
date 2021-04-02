@@ -48,6 +48,7 @@ public class ColorRecipeController {
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody ColorRecipe colorRecipe) {
 		
+		logger.info("Calling create new color");
 		ResponseModel resp = new ResponseModel();
 
 		if (!userAuthenticationService.isUserAdmin(r)) {
@@ -56,6 +57,7 @@ public class ColorRecipeController {
 
 		if(colorRecipe.getColors() != null && colorRecipe.getColors().size() > 0) {
 			if(colorRecipesService.createColor(colorRecipe)) {
+				resp.setCode(200);
 				resp.setMessage("Color Created");
 				return ResponseEntity.status(HttpStatus.OK).body(resp);
 			}
@@ -70,7 +72,7 @@ public class ColorRecipeController {
 		
 	}
 	
-	@PutMapping(value = "colorrecipe")
+	@PutMapping(value = "/colorrecipe")
 	ResponseEntity<ResponseModel> editColor (
 			@RequestHeader(value = "access-token", required = true) String r,
 			@RequestBody ColorRecipe colorRecipe) {
@@ -83,6 +85,7 @@ public class ColorRecipeController {
 
 		if(colorRecipe.getColors() != null && colorRecipe.getColors().size() > 0) {
 				ColorRecipe newColor = colorRecipesService.editColor(colorRecipe); 
+				resp.setCode(200);
 				resp.setMessage("Color updated");
 				ArrayList<ColorRecipe> color = new ArrayList<ColorRecipe>();
 				color.add(newColor);
@@ -96,7 +99,7 @@ public class ColorRecipeController {
 
 	}
 	
-	@DeleteMapping(value = "colorrecipe")
+	@DeleteMapping(value = "/colorrecipe")
 	ResponseEntity<ResponseModel> deleteColor (
 			@RequestHeader(value = "access-token", required = true) String r,
 			@RequestBody ColorRecipe colorRecipe) {
@@ -109,6 +112,7 @@ public class ColorRecipeController {
 
 		if(colorRecipe.getColors() != null && colorRecipe.getColors().size() > 0) {
 			if(colorRecipesService.deleteColor(colorRecipe)) {
+				resp.setCode(200);
 				resp.setMessage("Color Deleted");
 				return ResponseEntity.status(HttpStatus.OK).body(resp);
 			}
@@ -116,14 +120,13 @@ public class ColorRecipeController {
 			throw new ValidationException("Invalid params");
 		}
 		
-		resp.setMessage("Not Implemented");
-		
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
+		resp.setMessage("Color Not Deleted");
+		return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(resp);
 
 		
 	}
 	
-	@GetMapping(value ="colorrecipe")
+	@GetMapping(value ="/colorrecipe")
 	ResponseEntity<ResponseModel> getAllColors (
 			@RequestHeader(value = "access-token", required = true) String r) {
 
@@ -133,12 +136,13 @@ public class ColorRecipeController {
 			throw new AccessDeniedException("access denied");
 		}
 
+
 		resp.setMessage("Not Implemented");
 		
 		return ResponseEntity.status(HttpStatus.OK).body(resp);
 	}
 
-	@GetMapping(value ="colorrecipe/{colorName}")
+	@GetMapping(value ="/colorrecipe/{colorName}")
 	ResponseEntity<ResponseModel> getOneColor (
 			@PathVariable String colorName,
 			@RequestHeader(value = "access-token", required = true) String r) {
@@ -153,6 +157,7 @@ public class ColorRecipeController {
 		if(colorName != null) {
 			List<ColorRecipe> colors = colorRecipesService.getOneColor(colorName);
 			if(colors.size() == 1) {
+				resp.setCode(200);
 				resp.setMessage("Colors found");
 				resp.setColorRecipes((ArrayList<ColorRecipe>) colors);
 				return ResponseEntity.status(HttpStatus.OK).body(resp);

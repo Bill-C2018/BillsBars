@@ -2,6 +2,7 @@ package com.billsbars.app.controller;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 
+import com.billsbars.app.model.CustomerModel;
 import com.billsbars.app.model.ResponseModel;
 
 @ActiveProfiles("test")
@@ -30,11 +32,32 @@ public class BarTypesControllerTest {
 	@Autowired
 	private TestRestTemplate restTemplate;
 	
+	private String myToken = "";
+	
+	CustomerModel customer = new CustomerModel("admin@google.com","admin","Password1");
+
+	
+	@BeforeAll
+	public void setUp() {
+		HttpHeaders headers2 = new HttpHeaders();
+        headers2.set("access-token", "");
+        HttpEntity<?> entity2 = new HttpEntity<>(customer,headers2);	
+		String uri2 = "http://localhost:";
+		uri2 += port + "/login";   
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri2, HttpMethod.POST, entity2, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equalsIgnoreCase("Logged in")).isTrue();
+		assertThat(bdy.getToken() != null).isTrue();
+		this.myToken = bdy.getToken();
+	}
+	
+	
 	@Test
 	void getBarTypes() throws Exception {
 		
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(headers);	
 		String uri = "http://localhost:";
 		uri += port + "/bartypes";        
@@ -43,7 +66,7 @@ public class BarTypesControllerTest {
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getBarTypes().size() == 2).isTrue();
+		assertThat(bdy.getBarTypes().size() == 4).isTrue();
 
 		
 	}
@@ -52,7 +75,7 @@ public class BarTypesControllerTest {
 	void getMoldTypes() throws Exception {
 		
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(headers);	
 		String uri = "http://localhost:";
 		uri += port + "/moldtypes";        
@@ -61,7 +84,7 @@ public class BarTypesControllerTest {
 		ResponseModel bdy = response.getBody();
 
 		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
-		assertThat(bdy.getMoldStyles().size() == 4).isTrue();
+		assertThat(bdy.getMoldStyles().size() == 5).isTrue();
 
 		
 	}
@@ -70,7 +93,7 @@ public class BarTypesControllerTest {
 	void getBaseColors() throws Exception {
 		
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(headers);	
 		String uri = "http://localhost:";
 		uri += port + "/basecolors";        
@@ -88,7 +111,7 @@ public class BarTypesControllerTest {
 	void getBaseScents() throws Exception {
 		
 		HttpHeaders headers = new HttpHeaders();
-        headers.set("access-token", "123456789");
+        headers.set("access-token", this.myToken);
         HttpEntity<?> entity = new HttpEntity<>(headers);	
 		String uri = "http://localhost:";
 		uri += port + "/basescents";        
@@ -101,6 +124,25 @@ public class BarTypesControllerTest {
 
 		
 	}
+	
+	@Test
+	void getSoapIngrediants() throws Exception {
+		
+		HttpHeaders headers = new HttpHeaders();
+        headers.set("access-token", this.myToken);
+        HttpEntity<?> entity = new HttpEntity<>(headers);	
+		String uri = "http://localhost:";
+		uri += port + "/newsoap";        
+
+		ResponseEntity<ResponseModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, ResponseModel.class);
+		ResponseModel bdy = response.getBody();
+
+		assertThat(response.getStatusCode() == HttpStatus.OK).isTrue();
+		assertThat(bdy.getMessage().equals("all is good")).isTrue();
+
+		
+	}
+
 
 
 }

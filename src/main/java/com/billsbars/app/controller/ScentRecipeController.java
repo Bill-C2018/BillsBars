@@ -1,5 +1,7 @@
 package com.billsbars.app.controller;
 
+import java.util.ArrayList;
+
 import javax.validation.Valid;
 import javax.validation.ValidationException;
 
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.billsbars.app.AccessDeniedException;
 import com.billsbars.app.model.ResponseModel;
 import com.billsbars.app.model.ScentRecipe;
+import com.billsbars.app.model.SingleScent;
 import com.billsbars.app.service.ScentRecipeService;
 import com.billsbars.app.service.UserAuthenticationService;
 
@@ -35,10 +39,27 @@ public class ScentRecipeController {
 	private UserAuthenticationService userAuthenticationService;
 
 
-	@PostMapping(value ="scentrecipe")
+	@PostMapping(value ="/scentrecipe")
 	ResponseEntity<ResponseModel> createScent(
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody ScentRecipe scent) {
+		
+		logger.info("calling create scent {}",scent);
+		
+/*
+ * Is this actually needed or am i building the web side object incorrectly
+ * however this works both from react and tests so for now its good
+ */
+		ArrayList<SingleScent> newlist = new ArrayList<SingleScent>();
+		ArrayList<SingleScent> inlist = scent.getBaseScents();
+		for (int i = 0; i < inlist.size(); i++) {
+			SingleScent n = 
+					new SingleScent(inlist.get(i).getBaseScent().name(),inlist.get(i).getDrops());
+			newlist.add(n);
+		}
+		
+		ScentRecipe newScent = new ScentRecipe(scent.getName(),newlist);
+		
 		
 		ResponseModel resp = new ResponseModel();
 
@@ -47,7 +68,7 @@ public class ScentRecipeController {
 		}
 
 		if(scent != null) {
-			scentRecipeService.createScent(scent);
+			scentRecipeService.createScent(newScent);
 			resp.setMessage("Scent created");
 			resp.setCode(200);
 			return ResponseEntity.status(HttpStatus.OK).body(resp);
@@ -59,7 +80,7 @@ public class ScentRecipeController {
 	
 	}
 	
-	@PutMapping(value = "scentrecipe")
+	@PutMapping(value = "/scentrecipe")
 	ResponseEntity<ResponseModel> editScent(
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody ScentRecipe scent) {
@@ -79,7 +100,7 @@ public class ScentRecipeController {
 	}	
 
 	
-	@DeleteMapping(value = "scentrecipe")
+	@DeleteMapping(value = "/scentrecipe")
 	ResponseEntity<ResponseModel> deleteScent(
 			@RequestHeader(value = "access-token", required = true) String r,
 			@Valid @RequestBody ScentRecipe scent) {
@@ -91,17 +112,25 @@ public class ScentRecipeController {
 		}
 
 		boolean res = scentRecipeService.deleteScent(scent.getName());
+		if(res == true) {
+			resp.setMessage("Scent deleted");
+			return ResponseEntity.status(HttpStatus.OK).body(resp);
+		}
 		
-		resp.setMessage("Not Implemented");
+		resp.setMessage("Scent NOT deleted");
+		return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(resp);
+	
 		
-		return ResponseEntity.status(HttpStatus.OK).body(resp);
+		
+		
+		
 	
 	}	
 	
-	@GetMapping(value = "scentrecipe/{scentId}")
+	@GetMapping(value = "/scentrecipe/{scentId}")
 	ResponseEntity<ResponseModel> getOneScent(
 			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ScentRecipe scent) {
+			@PathVariable String scentName) {
 		
 		ResponseModel resp = new ResponseModel();
 
@@ -115,10 +144,9 @@ public class ScentRecipeController {
 	
 	}	
 
-	@GetMapping(value = "scentrecipe")
+	@GetMapping(value = "/scentrecipe")
 	ResponseEntity<ResponseModel> getAllScents(
-			@RequestHeader(value = "access-token", required = true) String r,
-			@RequestBody ScentRecipe scent) {
+			@RequestHeader(value = "access-token", required = true) String r) {
 		
 		ResponseModel resp = new ResponseModel();
 

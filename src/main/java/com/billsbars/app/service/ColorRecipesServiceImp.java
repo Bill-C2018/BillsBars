@@ -57,8 +57,8 @@ public class ColorRecipesServiceImp implements ColorRecipesService {
 
 	@Override
 	public List<ColorRecipe> getAllColors() {
-		// TODO Auto-generated method stub
-		return null;
+		List<ColorRecipe> res = colorRecipesRepository.findAll();
+		return res;
 	}
 
 	@Override

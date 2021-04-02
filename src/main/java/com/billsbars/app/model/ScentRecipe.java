@@ -22,5 +22,6 @@ public class ScentRecipe {
 	public ScentRecipe(String name, ArrayList<SingleScent> baseScents) {
 		this.name = name;
 		this.baseScents = baseScents;
+
 	}
 }

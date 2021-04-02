@@ -10,10 +10,12 @@ public class Inventory {
 	@Id
 	public String id; 
 	private String barOfSoapId;
+	private String soapName;
 	private int count;
 	
 	public Inventory() {}
-	public Inventory(String id, int count) {
+	public Inventory(String soapName, String id, int count) {
+		this.soapName = soapName;
 		this.barOfSoapId = id;
 		this.count = count;
 	}

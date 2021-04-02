@@ -3,6 +3,8 @@ package com.billsbars.app.model;
 import org.springframework.data.annotation.Id;
 
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -11,25 +13,26 @@ public class BarOfSoap {
 
 	@Id
 	public String id;
-	@NotNull
+	@NotBlank
+	private String soapName;
 	private BarTypes barType;
-	@NotNull
 	private BaseTypes baseType;
-	@NotNull
-	private ColorRecipe color;
-	@NotNull
-	private ScentRecipe scent;
+	@NotBlank
+	private String color;
+	@NotBlank
+	private String scent;
 	@NotNull
 	private int count;
-	@NotNull
+	private int weight;
 	private MoldStyle moldStyle;
 	private boolean isOrganic = false;
 	
 	public BarOfSoap() { }
 	
-	public BarOfSoap(BarTypes type, BaseTypes baseType, ColorRecipe color,
-					ScentRecipe scent,MoldStyle moldStyle,boolean organic) {
+	public BarOfSoap(String name,BarTypes type, BaseTypes baseType, String color,
+					String scent,MoldStyle moldStyle,boolean organic) {
 		
+		this.soapName = name;
 		this.barType = type;
 		this.baseType = baseType;
 		this.color = color;
@@ -47,7 +50,7 @@ public class BarOfSoap {
 		
 		if ( this.barType == o.barType 
 			&& this.baseType == o.baseType
-			&& this.color.getFinalColor().equals(o.color.getFinalColor())) {
+			&& this.scent.equals(o.scent)) {
 			return true;
 		}
 		
@@ -55,7 +58,7 @@ public class BarOfSoap {
 	}
 	
 	public int hashCode() {
-		return this.color.getFinalColor().hashCode();
+		return this.scent.hashCode();
 	}
 	
 	
